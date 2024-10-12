@@ -31,14 +31,14 @@ export const Hero = () => {
         </div>
         <div className="col-span-1 lg:col-span-2 relative">
           <Image
-            src="/hero1.svg"
+            src="/Hero1.svg"
             className="h-full w-full"
             alt="Hero Image 1"
             height={100}
             width={100}
           ></Image>
           <Image
-            src="/hero2.svg"
+            src="/Hero2.svg"
             className="w-2/6  absolute bottom-0 right-0"
             alt="Hero Image 2"
             height={100}
