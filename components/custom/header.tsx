@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export const Header = () => {
   return (
-    <div className="h-[100px] flex justify-between items-center  border-b border-[#CBCBCB] px-[50px] md:px-[100px] lg:px-[50px] xl:px-[200px]">
+    <div className="h-[100px] flex justify-center lg:justify-between items-center border-b border-[#CBCBCB] px-[50px] md:px-[100px] lg:px-[50px] xl:px-[200px]">
       <Image
         src="/tridentLogo.svg"
         className="w-[200px] h-[45px]"
@@ -13,9 +14,9 @@ export const Header = () => {
       />
       <div className=" justify-center items-center gap-6 hidden lg:flex">
         <div className="flex justify-center items-center gap-10 font-semibold text-base text-[#393939]">
-          <div className="underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]">Home</div>
-          <div>Properties</div>
-          <div>Register As</div>
+          <div className="underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]"><Link href={'#'}>Home</Link></div>
+          <div><Link href={'#'}>Properties</Link></div>
+          <div><Link href={'#'}> Register As</Link></div>
         </div>
         <Button className="bg-[#00CCFF] hover:bg-[#00CCFF] text-white border-none px-[30px] py-[10px] text-base hover:text-white font-normal">
           Contact Us
