@@ -48,7 +48,7 @@ export const Footer = () => {
               />
               info@tridentrent.com
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center text-nowrap">
               <Image
                 src="/location.svg"
                 alt="location"
