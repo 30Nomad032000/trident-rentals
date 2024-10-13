@@ -7,7 +7,7 @@ export const Choose = () => {
         <div className="text-4xl font-medium text-center">
           Why Choose Trident Property Management ?
         </div>
-        <div className="flex justify-center items-center relative right-28">
+        <div className="flex justify-center items-center relative right-14 lg:right-28">
           <Image
             src="/underline1.svg"
             alt="underline"
@@ -17,14 +17,14 @@ export const Choose = () => {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <p className="w-3/5 text-center">
+        <p className="w-full lg:w-3/5 text-center">
           Join us at Trident Property Management as we pave the way for a new
           era of property management that is both intelligent and affordable.
           Experience the difference that AI can make in simplifying your
           property management needs while ensuring affordability for all.
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-x-20 gap-y-10 py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-20 gap-y-10 py-10">
         <div className="flex flex-col items-center justify-center gap-7">
           <Image
             src="/project.svg"
@@ -34,7 +34,7 @@ export const Choose = () => {
             className="size-16"
           />
           <div className="flex flex-col items-center justify-center gap-1">
-            <div className="text-xl text-[#003399] font-medium">Innovative Technology</div>
+            <div className="text-xl text-[#172540] font-medium">Innovative Technology</div>
             <p className="text-center text-base">
               We harness the power of AI to deliver unparalleled property
               management solutions.
@@ -50,7 +50,7 @@ export const Choose = () => {
             className="size-16"
           />
           <div className="flex flex-col items-center justify-center gap-1">
-            <div className="text-xl text-[#003399] font-medium">Affordability</div>
+            <div className="text-xl text-[#172540] font-medium">Affordability</div>
             <p className="text-center text-base">
               We are committed to providing quality housing options at
               competitive prices.
@@ -66,7 +66,7 @@ export const Choose = () => {
             className="size-16"
           />
           <div className="flex flex-col items-center justify-center gap-1">
-            <div className="text-xl text-[#003399] font-medium">Customer-Centric Approach</div>
+            <div className="text-xl text-[#172540] font-medium text-center">Customer-Centric Approach</div>
             <p className="text-center text-base">
               Our team prioritizes customer satisfaction and strives to exceed
               expectations at every turn.

@@ -1,16 +1,14 @@
-import { Caveat } from "next/font/google"
+import { Caveat } from "next/font/google";
 
 export const caveat = Caveat({
-    weight: ["400", "500", "600", "700"],
-  subsets: ['latin'],
-})
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 interface CustomFontTextProps {
-    children: React.ReactNode 
+  children: React.ReactNode;
 }
 
-export const CustomFontText: React.FC<CustomFontTextProps> = ({children}) => {
-    return(
-            <div className={caveat.className}>{children}</div> 
-    )
-}
+export const CustomFontText: React.FC<CustomFontTextProps> = ({ children }) => {
+  return <div className={caveat.className}>{children}</div>;
+};
