@@ -4,7 +4,7 @@ import { Textarea } from "../ui/textarea";
 
 export const ContactForm = () => {
   return (
-    <div className="px-[50px] md:px-[100px] lg:px-[200px] py-10">
+    <div className="px-[25px] md:px-[100px] lg:px-[200px] py-10">
       <div className="bg-[url('/contactFormBg.svg')] h-[653px] w-full bg-no-repeat bg-center flex items-center justify-center rounded-[20px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 h-full w-2/3">
           <div className="text-6xl text-white font-bold leading-[96px] pt-8 hidden lg:block">

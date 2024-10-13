@@ -6,6 +6,7 @@ import { Mission } from "@/components/custom/mission";
 import { Contact } from "@/components/custom/contact";
 import { Services } from "@/components/custom/services";
 import { ContactForm } from "@/components/custom/contactForm";
+import { Footer } from "@/components/custom/footer";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Contact />
       <Services/>
       <ContactForm/>
+      <Footer />
     </>
   );
 }

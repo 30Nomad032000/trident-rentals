@@ -66,7 +66,7 @@ export const Choose = () => {
             className="size-16"
           />
           <div className="flex flex-col items-center justify-center gap-1">
-            <div className="text-xl text-[#172540] font-medium">Customer-Centric Approach</div>
+            <div className="text-xl text-[#172540] font-medium text-center">Customer-Centric Approach</div>
             <p className="text-center text-base">
               Our team prioritizes customer satisfaction and strives to exceed
               expectations at every turn.
