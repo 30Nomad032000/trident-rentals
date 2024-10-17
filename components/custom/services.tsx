@@ -12,7 +12,7 @@ export const Services = () => {
           era of property management that is both intelligent and affordable.
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-24 gap-y-8 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4 gap-y-8 w-full">
         <div className="relative justify-items-center  h-[444px] rounded-[25px]  overflow-hidden group">
           <div className="absolute inset-0 bg-[url('/AI.svg')] max-w-[336px] mx-auto bg-no-repeat bg-cover px-6 py-11 flex flex-col justify-end  transition-opacity duration-500 opacity-100 group-hover:opacity-0">
             <div className="text-3xl font-medium text-white">
@@ -20,7 +20,7 @@ export const Services = () => {
             </div>
           </div>
           <div className="absolute inset-0 bg-[url('/AI.svg')] bg-no-repeat bg-cover rounded-[25px]  overflow-hidden mx-auto  max-w-[336px] p-4 flex flex-col items-start justify-between transition-opacity duration-500 opacity-0 group-hover:opacity-100">
-            <div className="absolute inset-0 bg-black opacity-30"></div>
+            <div className="absolute inset-0 bg-black opacity-50"></div>
             <Image
               src="/arrow.svg"
               alt="arrow"
@@ -48,7 +48,7 @@ export const Services = () => {
             </div>
           </div>
           <div className="absolute inset-0 bg-[url('/Ten.svg')] bg-no-repeat bg-cover  rounded-[25px] max-w-[336px]  overflow-hidden mx-auto p-4 flex flex-col items-start justify-between transition-opacity duration-500 opacity-0 group-hover:opacity-100">
-            <div className="absolute inset-0 bg-black opacity-30"></div>
+            <div className="absolute inset-0 bg-black opacity-50"></div>
             <Image
               src="/arrow.svg"
               alt="arrow"
@@ -76,7 +76,7 @@ export const Services = () => {
             </div>
           </div>
           <div className="absolute inset-0 bg-[url('/Fin.svg')] rounded-[25px]  overflow-hidden mx-auto max-w-[336px] bg-no-repeat bg-cover p-4 flex flex-col items-start justify-between transition-opacity duration-500 opacity-0 group-hover:opacity-100">
-            <div className="absolute inset-0 bg-black opacity-30"></div>
+            <div className="absolute inset-0 bg-black opacity-50"></div>
             <Image
               src="/arrow.svg"
               alt="arrow"
