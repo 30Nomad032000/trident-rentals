@@ -3,12 +3,12 @@ import { CustomFontText } from "../ui/customFontText";
 
 export const Mission = () => {
   return (
-    <div className="px-[50px] md:px-[100px] lg:px-[50px] xl:px-[200px] py-10 grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8">
+    <div className="container mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8">
       <div className="col-span-1 lg:col-span-2">
         <Image
           src="/mission.svg"
           alt="mission Image"
-          className="w-full h-full"
+          className="w-full h-full object-cover rounded-[20px]"
           height={100}
           width={100}
         />
