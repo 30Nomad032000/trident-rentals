@@ -2,7 +2,7 @@ import { CustomFontText } from "../ui/customFontText";
 
 export const About = () => {
   return (
-    <div className="px-[50px] md:px-[100px] lg:px-[200px] py-10 grid grid-cols-1 lg:grid-cols-4 items-center justify-items-center">
+    <div className="container mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-4 items-center justify-items-center">
       <div className="font-bold text-[64px] text-[#003399] text-nowrap">
         <CustomFontText>About Us</CustomFontText>
       </div>
