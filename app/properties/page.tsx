@@ -18,7 +18,8 @@ export default function Page() {
                     <PropertyFilter />
                 </div>
                 <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-x-1 sm:gap-x-2 md:gap-x-2 lg:gap-x-4 xl:gap-x-10 gap-y-8">
-                    {Array.from({ length: 12 }).map((item => <ListingCard />))}
+                    {/*@ts-no-check*/}
+                    {Array.from({ length: 12 }).map((item, index) => (<ListingCard key={index} />))}
                 </div>
             </div>
             <div className="py-4">

@@ -15,6 +15,14 @@ export default function PropertyFilter() {
     const [bathrooms, setBathrooms] = useState('1+')
     const [propertyTypes, setPropertyTypes] = useState<string[]>([])
 
+    const handleBedrooms = (value: string) => {
+        setBedrooms(value)
+    }
+
+    const handleBathrooms = (value: string) => {
+        setBathrooms(value)
+    }
+
     return (
         <div className="w-72 bg-[url('/filterBackground.svg')] bg-no-repeat bg-cover text-white p-3 rounded-[20px] pb-6">
             <div className="flex justify-between items-center mb-4 p-1 border-b border-[#898989]">
@@ -61,7 +69,7 @@ export default function PropertyFilter() {
                         <hr className='w-full' />
                     </div>
                     <div>
-                        <RadioGroup defaultValue="1+" className='grid grid-cols-3 gap-x-6 gap-y-6'>
+                        <RadioGroup defaultValue="1+" className='grid grid-cols-3 gap-x-6 gap-y-6' value={bedrooms} onValueChange={handleBedrooms}>
                             {['1+', '2+', '3+', '4+', 'All'].map((option) => (
                                 <div key={option} className='flex gap-3 items-center justify-start'>
                                     <RadioGroupItem id={option}
@@ -83,7 +91,7 @@ export default function PropertyFilter() {
                         <hr className='w-full' />
                     </div>
                     <div>
-                        <RadioGroup defaultValue="1+" className='grid grid-cols-3 gap-x-6 gap-y-6'>
+                        <RadioGroup defaultValue="1+" className='grid grid-cols-3 gap-x-6 gap-y-6' value={bathrooms} onValueChange={handleBathrooms}>
                             {['1+', '2+', '3+', '4+', '5+', 'All'].map((option) => (
                                 <div key={option} className='flex gap-3 items-center justify-start'>
                                     <RadioGroupItem id={option}
@@ -101,7 +109,7 @@ export default function PropertyFilter() {
 
 
                 <div className='flex flex-col gap-7'>
-                <div className='flex w-full items-center justify-center'>
+                    <div className='flex w-full items-center justify-center'>
                         <h3 className="text-sm font-semibold border border-[#898989] w-fit pl-3 pr-5 py-2 rounded-[30px]">Type</h3>
                         <hr className='w-full' />
                     </div>

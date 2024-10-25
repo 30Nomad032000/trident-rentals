@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 
 export const Header = () => {
   const pathName = usePathname();
-  console.log(pathName)
   return (
     <div className={cn(pathName === "/properties" ? "" : "border-b border-[#CBCBCB] ")}>
       <div className="container mx-auto flex justify-center lg:justify-between items-center h-[100px] px-4">

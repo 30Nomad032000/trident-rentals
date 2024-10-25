@@ -11,7 +11,7 @@ export default function ListingCard() {
                 alt="2685 Jennydiane Drive"
                 width={253}
                 height={144}
-                className="object-cover rounded-lg w-fit h-[166px] bg-cover"
+                className="object-cover rounded-lg w-auto h-[166px] bg-cover"
             />
             <CardContent className="p-2">
                 <div className='flex flex-col gap-6'>
@@ -31,7 +31,7 @@ export default function ListingCard() {
                 </div>
             </CardContent>
             <CardFooter className="p-2 pt-0">
-                <div className='flex w-full gap-[18px] justify-between'><div className="text-2xl font-bold text-nowrap">$ 2,700</div>  <Button variant="outline" className="px-[15px] py-[6px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base">I'm Interested</Button></div>
+                <div className='flex w-full gap-[18px] justify-between'><div className="text-2xl font-bold text-nowrap">$ 2,700</div>  <Button variant="outline" className="px-[15px] py-[6px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base">I&apos;m  Interested</Button></div>
         </CardFooter>
         </Card >
     )
