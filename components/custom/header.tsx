@@ -7,8 +7,9 @@ import { cn } from "@/lib/utils";
 
 export const Header = () => {
   const pathName = usePathname();
+  console.log(pathName)
   return (
-    <div className=" border-b border-[#CBCBCB] ">
+    <div className={cn(pathName === "/properties" ? "" : "border-b border-[#CBCBCB] ")}>
       <div className="container mx-auto flex justify-center lg:justify-between items-center h-[100px] px-4">
         <Image
           src="/tridentLogo.svg"
@@ -28,8 +29,12 @@ export const Header = () => {
             >
               <Link href={"/"}>Home</Link>
             </div>
-            <div>
-              <Link href={"#"}>Properties</Link>
+            <div className={cn(
+              pathName === "/properties"
+                ? "underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]"
+                : ""
+            )}>
+              <Link href={"/properties"}>Properties</Link>
             </div>
             <div
               className={cn(
