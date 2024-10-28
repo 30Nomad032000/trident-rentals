@@ -1,12 +1,21 @@
+"use client";
+
 import { Header } from "@/components/custom/header"
 import { CustomFontText } from "@/components/ui/customFontText"
 import ListingCard from "./components/listingCard"
 import PropertyFilter from "./components/listingFilter"
 import { Footer } from "@/components/custom/footer"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import { useEffect } from "react";
+import { generateAccessToken } from "@/lib/zohoApiClient";
+
 
 export default function Page() {
-    return (<><Header />
+    useEffect(() => {
+        console.log(generateAccessToken())
+    }, [])
+    return (<>
+        <Header />
         <div className="px-[46px] py-2">
             <div className=" h-64 bg-[url('/propertiesBanner.svg')] w-full bg-no-repeat bg-cover rounded-[20px]">
                 <div className="flex flex-col justify-center items-center h-full"><CustomFontText className="text-5xl font-bold text-white">Find Our Best</CustomFontText>
