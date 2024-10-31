@@ -41,7 +41,7 @@ export const RegisterForm = () => {
             htmlFor="terms1"
             className="text-base font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            I read and agreed{" "}
+            I read and agreed
             <span className="text-[#003399]">Terms and Conditions*</span>
           </label>
         </div>
