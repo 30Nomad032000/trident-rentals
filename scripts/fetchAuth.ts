@@ -11,6 +11,8 @@ const client_secret = process.env.CLIENT_SECRET as string;
 const redirect_uri = process.env.REDIRECT_URI as string;
 const auth_code = process.env.AUTH_CODE as string; // Temporary storage since it's valid for only 10 minutes
 
+console.log(client_id,client_secret,redirect_uri,auth_code)
+
 
 const token_url = "https://accounts.zoho.in/oauth/v2/token";
 

@@ -6,7 +6,6 @@ import ListingCard from "./components/listingCard"
 import PropertyFilter from "./components/listingFilter"
 import { Footer } from "@/components/custom/footer"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
-import { useEffect } from "react";
 
 
 export default function Page() {
