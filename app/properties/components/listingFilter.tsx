@@ -19,15 +19,21 @@ export default function PropertyFilter() {
     const [bedrooms, setBedrooms] = useState('1+')
     const [bathrooms, setBathrooms] = useState('1+')
     const [propertyTypes, setPropertyTypes] = useState<string[]>([])
+    const [search, setSearch] = useState('')
 
     const handleBedrooms = (value: string) => {
-        router.push(pathname + "?" + createQueryString("bedrooms", value));
+        router.push(pathname + "?" + createQueryString("bedrooms", value), { scroll: false });
         setBedrooms(value)
     }
 
     const handleBathrooms = (value: string) => {
-        router.push(pathname + "?" + createQueryString("bathrooms", value));
+        router.push(pathname + "?" + createQueryString("bathrooms", value), { scroll: false });
         setBathrooms(value)
+    }
+
+    const handleSearch = (value: string) => {
+        router.push(pathname + "?" + createQueryString("search", value), { scroll: false });
+        setSearch(value)
     }
 
     const createQueryString = useCallback(
@@ -54,6 +60,8 @@ export default function PropertyFilter() {
                         type="text"
                         placeholder="Search here"
                         className="w-full rounded-[30px] text-black placeholder-slate-400 bg-white"
+                        value={search}
+                        onChange={(e) => handleSearch(e.target.value)}
                     />
                     <Search className="text-[#00CCFF] absolute right-4 top-2.5 h-5 w-5" />
                 </div>

@@ -33,7 +33,7 @@ export const Header = () => {
                 ? "underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]"
                 : ""
             )}>
-              <Link href={"/properties?bedrooms=0%2B&bathrooms=0%2B"}>Properties</Link>
+              <Link href={"/properties"}>Properties</Link>
             </div>
             <div
               className={cn(
