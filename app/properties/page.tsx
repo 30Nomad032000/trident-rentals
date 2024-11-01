@@ -22,10 +22,6 @@ export const Page = async ({
     const encodedCriteria = encodeURIComponent(criteria);
     const result = await fetchPropertyData(token, encodedCriteria)
 
-
-
-
-
     return (<>
         <Header />
         <div className="px-[46px] py-2">
@@ -40,7 +36,7 @@ export const Page = async ({
                 </div>
                 <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-x-1 sm:gap-x-2 md:gap-x-2 lg:gap-x-4 xl:gap-x-10 gap-y-8">
                     {/*@ts-no-check*/}
-                    {result === undefined ? null : result.data.map((item, index) => (<ListingCard image={item.Property_Images[0].Image.replace('/api/v2.1/', 'https://creatorapp.zoho.in/')} space={item.Sq_Feet} name={item.Property_Name} bedrooms={item.No_Of_Bedroom} bathrooms={item.No_of_Bathroom} address={item.Property_Address.address_line_1} price={item.Price} />))}
+                    {result === undefined ? null : result.data.map((item, index) => (<ListingCard image={item.Property_Images[0].Image.replace('/api/v2.1/', 'https://creatorapp.zoho.in/')} space={item.Sq_Feet} name={item.Property_Name} bedrooms={item.No_Of_Bedroom} bathrooms={item.No_of_Bathroom} address={item.Property_Address.address_line_1} price={item.Price} key={index}/>))}
                 </div>
             </div>
             <div className="py-4">
