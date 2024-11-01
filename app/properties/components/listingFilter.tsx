@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Search, RotateCw } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,20 +8,37 @@ import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export default function PropertyFilter() {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
     const [rent, setRent] = useState([0, 1500])
     const [bedrooms, setBedrooms] = useState('1+')
     const [bathrooms, setBathrooms] = useState('1+')
     const [propertyTypes, setPropertyTypes] = useState<string[]>([])
 
     const handleBedrooms = (value: string) => {
+        router.push(pathname + "?" + createQueryString("bedrooms", value));
         setBedrooms(value)
     }
 
     const handleBathrooms = (value: string) => {
+        router.push(pathname + "?" + createQueryString("bathrooms", value));
         setBathrooms(value)
     }
+
+    const createQueryString = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set(name, value);
+
+            return params.toString();
+        },
+        [searchParams]
+    );
 
     return (
         <div className="w-72 bg-[url('/filterBackground.svg')] bg-no-repeat bg-cover text-white p-3 rounded-[20px] pb-6">
