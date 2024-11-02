@@ -18,6 +18,7 @@ interface ListingCardProps {
 export const ListingCard: React.FC<ListingCardProps> = ({
     image, name, space, bedrooms, bathrooms, address, price
 }) => {
+    console.log(image);
     return (
         <Card className="w-full max-w-sm mx-auto hover:shadow-md px-2 py-2 h-fit">
             <img
