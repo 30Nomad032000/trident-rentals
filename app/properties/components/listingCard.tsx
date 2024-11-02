@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 interface ListingCardProps {
     image: string;
@@ -19,11 +21,11 @@ export const ListingCard: React.FC<ListingCardProps> = ({
     return (
         <Card className="w-full max-w-sm mx-auto hover:shadow-md px-2 py-2 h-fit">
             <img
-                src={image}
+                src={'/tridentLogo.svg'}
                 alt={name}
                 width={253}
                 height={144}
-                className="object-cover rounded-lg w-auto h-[166px] bg-cover"
+                className={cn(" rounded-lg w-auto h-[166px] bg-cover", 'object-contain')}
             />
             <CardContent className="p-2">
                 <div className='flex flex-col gap-6'>
@@ -43,7 +45,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
                 </div>
             </CardContent>
             <CardFooter className="p-2 pt-0">
-                <div className='flex w-full gap-[18px] justify-between'><div className="text-2xl font-bold text-nowrap">$ {price}</div>  <Button variant="outline" className="px-[15px] py-[6px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base">I&apos;m  Interested</Button></div>
+                <div className='flex w-full gap-[18px] justify-between'><div className="text-2xl font-bold text-nowrap">$ {price}</div>  <Link href='https://tridentrentalllc.zohocreatorportal.com/' target='_blank'><Button variant="outline" className="px-[15px] py-[6px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base">I&apos;m  Interested</Button></Link></div>
             </CardFooter>
         </Card >
     )

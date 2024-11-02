@@ -32,7 +32,7 @@ export default function Page() {
         </div>
         <div>
           <div className="text-[#172540] text-2xl font-semibold flex justify-center pb-3">
-            Register As A tenet
+            Register As A tenant
           </div>
           <RegisterForm />
         </div>

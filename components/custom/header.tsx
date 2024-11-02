@@ -51,7 +51,7 @@ export const Header = () => {
             </Button>
           </Link>
 
-          <Button
+          <Link href='https://tridentrentalllc.zohocreatorportal.com/' ><Button
             variant="outline"
             className="px-[30px] py-[10px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base"
           >
@@ -64,6 +64,7 @@ export const Header = () => {
             />
             Login
           </Button>
+          </Link>
         </div>
       </div>
     </div>

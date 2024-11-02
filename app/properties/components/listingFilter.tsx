@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Search, RotateCw } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,16 +10,34 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-export default function PropertyFilter() {
+interface PropertyFilterProps {
+    searchQuery: string;
+    bedroomsQuery: string;
+    bathroomsQuery: string;
+    propertyTypesQuery: string;
+    rentQuery: string;
+}
+
+const PropertyFilter: React.FC<PropertyFilterProps> = ({
+    searchQuery, bedroomsQuery, bathroomsQuery, propertyTypesQuery, rentQuery
+}) => {
+
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const [rent, setRent] = useState(rentQuery.split(',').map((item) => Number(item)) ?? [0, 100000])
+    const [bedrooms, setBedrooms] = useState(bedroomsQuery ?? '1')
+    const [bathrooms, setBathrooms] = useState(bathroomsQuery ?? '1')
+    const [propertyTypes, setPropertyTypes] = useState<string[]>(propertyTypesQuery.split(',') ?? [])
+    const [search, setSearch] = useState(searchQuery ?? '')
 
-    const [rent, setRent] = useState([0, 1500])
-    const [bedrooms, setBedrooms] = useState('1+')
-    const [bathrooms, setBathrooms] = useState('1+')
-    const [propertyTypes, setPropertyTypes] = useState<string[]>([])
-    const [search, setSearch] = useState('')
+    useEffect(() => {
+        const queryString = propertyTypes.join(',');
+        router.push(
+            pathname + "?" + createQueryString("types", queryString),
+            { scroll: false }
+        );
+    }, [propertyTypes]);
 
     const handleBedrooms = (value: string) => {
         router.push(pathname + "?" + createQueryString("bedrooms", value), { scroll: false });
@@ -36,6 +54,32 @@ export default function PropertyFilter() {
         setSearch(value)
     }
 
+
+    const handleTypes = (checked: boolean, type: string) => {
+        const updatedPropertyTypes = checked
+            ? [...propertyTypes, type]
+            : propertyTypes.filter((t) => t !== type);
+
+        setPropertyTypes(updatedPropertyTypes);
+    };
+
+    const handleRent = (value: number[]) => {
+        const newValue = value
+        const queryString = newValue.join(',')
+        router.push(pathname + "?" + createQueryString("rent", queryString), { scroll: false });
+        setRent(value as number[]);
+
+    }
+
+    const handleClear = () => {
+        window.location.href = '/properties'
+        setBathrooms('1');
+        setBedrooms('1');
+        setPropertyTypes([]);
+        setRent([0, 100000])
+        setSearch('')
+    }
+
     const createQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString());
@@ -46,11 +90,12 @@ export default function PropertyFilter() {
         [searchParams]
     );
 
+
     return (
-        <div className="w-72 bg-[url('/filterBackground.svg')] bg-no-repeat bg-cover text-white p-3 rounded-[20px] pb-6">
+        <div className="w-full lg:bg-[url('/filterBackground.svg')] lg:bg-transparent bg-slate-800 bg-no-repeat bg-cover text-white p-3 rounded-[20px] pb-6">
             <div className="flex justify-between items-center mb-4 p-1 border-b border-[#898989]">
                 <h2 className="text-lg font-semibold">FILTER</h2>
-                <Button size="sm" className="text-slate-500 hover:text-slate-300 text-sm bg-transparent hover:bg-transparent">
+                <Button onClick={handleClear} size="sm" className="text-slate-500 hover:text-slate-300 text-sm bg-transparent hover:bg-transparent">
                     Clear All <RotateCw className="ml-2 h-4 w-4" />
                 </Button>
             </div>
@@ -75,10 +120,10 @@ export default function PropertyFilter() {
                     <div>
                         <Slider
                             min={0}
-                            max={1500}
+                            max={100000}
                             step={10}
                             value={rent}
-                            onValueChange={setRent}
+                            onValueChange={handleRent}
                             className="my-4"
                         />
                         <div className="flex justify-between text-sm">
@@ -94,13 +139,12 @@ export default function PropertyFilter() {
                         <hr className='w-full' />
                     </div>
                     <div>
-                        <RadioGroup defaultValue="1+" className='grid grid-cols-3 gap-x-6 gap-y-6' value={bedrooms} onValueChange={handleBedrooms}>
-                            {['1+', '2+', '3+', '4+', 'All'].map((option) => (
+                        <RadioGroup defaultValue={bedroomsQuery} className='grid grid-cols-3 gap-x-6 gap-y-6' value={bedrooms} onValueChange={handleBedrooms}>
+                            {['1+', '2+', '3+', '4+', 'All'].map((option, index) => (
                                 <div key={option} className='flex gap-3 items-center justify-start'>
                                     <RadioGroupItem id={option}
                                         key={option}
-                                        value={option}
-
+                                        value={`${index + 1}`}
                                     />
                                     <Label>{option}</Label>
 
@@ -116,13 +160,12 @@ export default function PropertyFilter() {
                         <hr className='w-full' />
                     </div>
                     <div>
-                        <RadioGroup defaultValue="1+" className='grid grid-cols-3 gap-x-6 gap-y-6' value={bathrooms} onValueChange={handleBathrooms}>
-                            {['1+', '2+', '3+', '4+', '5+', 'All'].map((option) => (
+                        <RadioGroup defaultValue={bathroomsQuery} className='grid grid-cols-3 gap-x-6 gap-y-6' value={bathrooms} onValueChange={handleBathrooms}>
+                            {['1+', '2+', '3+', '4+', '5+', 'All'].map((option, index) => (
                                 <div key={option} className='flex gap-3 items-center justify-start'>
                                     <RadioGroupItem id={option}
                                         key={option}
-                                        value={option}
-
+                                        value={`${index + 1}`}
                                     />
                                     <Label>{option}</Label>
 
@@ -144,18 +187,12 @@ export default function PropertyFilter() {
                                 <Checkbox
                                     id={type}
                                     checked={propertyTypes.includes(type)}
-                                    onCheckedChange={(checked) => {
-                                        setPropertyTypes(
-                                            checked
-                                                ? [...propertyTypes, type]
-                                                : propertyTypes.filter((t) => t !== type)
-                                        )
-                                    }}
+                                    onCheckedChange={(checked: boolean) => handleTypes(checked, type)}
                                     className="border-slate-500"
                                 />
-                                <label htmlFor={type} className="ml-2 text-sm">
+                                <Label htmlFor={type} className="ml-2 text-sm">
                                     {type}
-                                </label>
+                                </Label>
                             </div>
                         ))}
                     </div>
@@ -164,3 +201,5 @@ export default function PropertyFilter() {
         </div>
     )
 }
+
+export default PropertyFilter;
