@@ -1,10 +1,10 @@
-// scripts/getTokens.ts
-
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
 import dotenv from 'dotenv';
+import fetch from 'node-fetch';
 
 dotenv.config();
+
+const redis = Redis.fromEnv();
 
 const client_id = process.env.CLIENT_ID as string;
 const client_secret = process.env.CLIENT_SECRET as string;
@@ -53,7 +53,6 @@ interface Tokens {
     } else {
       const { access_token, refresh_token, expires_in } = data;
 
-      // Store the tokens securely
       const tokens: Tokens = {
         refresh_token,
         access_token,
@@ -61,10 +60,9 @@ interface Tokens {
         obtained_at: Date.now(),
       };
 
-      const tokenPath = path.join(process.cwd(), 'tokens.json');
-      fs.writeFileSync(tokenPath, JSON.stringify(tokens));
+      await redis.set('zoho_tokens', JSON.stringify(tokens));
 
-      console.log('Tokens obtained and stored successfully');
+      console.log('Tokens obtained and stored successfully in Upstash KV');
     }
   } catch (error) {
     console.error('Error:', (error as Error).message);

@@ -1,13 +1,11 @@
-// utils/zohoAuth.ts
-
-import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
 import dotenv from 'dotenv';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
-const tokenPath = path.join(process.cwd(), 'tokens.json');
+// Initialize Upstash Redis
+const redis = Redis.fromEnv();
 
 const client_id = process.env.CLIENT_ID as string;
 const client_secret = process.env.CLIENT_SECRET as string;
@@ -29,21 +27,16 @@ interface ZohoTokenResponse {
 }
 
 export async function getAccessToken(): Promise<string> {
-  let tokens: Tokens;
+  const tokens = (await redis.get<Tokens>('zoho_tokens')) as Tokens | null;
 
-  if (fs.existsSync(tokenPath)) {
-    tokens = JSON.parse(fs.readFileSync(tokenPath, 'utf8')) as Tokens;
-  } else {
+  if (!tokens) {
     throw new Error('Tokens not found. Please authorize first.');
   }
 
   const { access_token, refresh_token, expires_in, obtained_at } = tokens;
-
   const now = Date.now();
 
-  // Check if the access token is expired
   if (now > obtained_at + expires_in * 1000) {
-    // Access token is expired, refresh it
     const params = new URLSearchParams();
     params.append('grant_type', 'refresh_token');
     params.append('client_id', client_id);
@@ -65,13 +58,14 @@ export async function getAccessToken(): Promise<string> {
         const newAccessToken = data.access_token;
         const newExpiresIn = data.expires_in;
 
-        // Update tokens
-        tokens.access_token = newAccessToken;
-        tokens.expires_in = newExpiresIn;
-        tokens.obtained_at = now;
+        const updatedTokens: Tokens = {
+          ...tokens,
+          access_token: newAccessToken,
+          expires_in: newExpiresIn,
+          obtained_at: now,
+        };
 
-        // Save updated tokens
-        fs.writeFileSync(tokenPath, JSON.stringify(tokens));
+        await redis.set('zoho_tokens', updatedTokens);
 
         return newAccessToken;
       }
