@@ -1,14 +1,18 @@
-"use client";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+'use client';
+import Image from 'next/image';
+import { Button } from '../ui/button';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 export const Header = () => {
   const pathName = usePathname();
   return (
-    <div className={cn(pathName === "/properties" ? "" : "border-b border-[#CBCBCB] ")}>
+    <div
+      className={cn(
+        pathName === '/properties' ? '' : 'border-b border-[#CBCBCB] '
+      )}
+    >
       <div className="container mx-auto flex justify-center lg:justify-between items-center h-[100px] px-4">
         <Image
           src="/tridentLogo.svg"
@@ -21,28 +25,30 @@ export const Header = () => {
           <div className="flex justify-center items-center gap-10 font-semibold text-base text-[#393939]">
             <div
               className={cn(
-                pathName === "/"
-                  ? "underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]"
-                  : ""
+                pathName === '/'
+                  ? 'underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]'
+                  : ''
               )}
             >
-              <Link href={"/"}>Home</Link>
-            </div>
-            <div className={cn(
-              pathName === "/properties"
-                ? "underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]"
-                : ""
-            )}>
-              <Link href={"/properties"}>Properties</Link>
+              <Link href={'/'}>Home</Link>
             </div>
             <div
               className={cn(
-                pathName === "/register"
-                  ? "underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]"
-                  : ""
+                pathName === '/properties'
+                  ? 'underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]'
+                  : ''
               )}
             >
-              <Link href={"/register"}> Register As</Link>
+              <Link href={'/properties'}>Properties</Link>
+            </div>
+            <div
+              className={cn(
+                pathName === '/register'
+                  ? 'underline underline-offset-8 decoration-[#00CCFF] decoration-[3px]'
+                  : ''
+              )}
+            >
+              <Link href={'/register'}> Register As</Link>
             </div>
           </div>
           <Link href="/contact">
@@ -51,19 +57,20 @@ export const Header = () => {
             </Button>
           </Link>
 
-          <Link href='https://tridentrentalllc.zohocreatorportal.com/' ><Button
-            variant="outline"
-            className="px-[30px] py-[10px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base"
-          >
-            <Image
-              className="h-4 w-4"
-              src="/loginIcon.svg"
-              alt="login icon"
-              width={100}
-              height={100}
-            />
-            Login
-          </Button>
+          <Link href="https://tridentrentalllc.zohocreatorportal.com/">
+            <Button
+              variant="outline"
+              className="px-[30px] py-[10px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base"
+            >
+              <Image
+                className="h-4 w-4"
+                src="/loginIcon.svg"
+                alt="login icon"
+                width={100}
+                height={100}
+              />
+              Login
+            </Button>
           </Link>
         </div>
       </div>

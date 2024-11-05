@@ -1,8 +1,8 @@
-"use-client";
+'use-client';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 
 export const RegisterForm = () => {
   return (
@@ -47,7 +47,9 @@ export const RegisterForm = () => {
         </div>
       </div>
 
-      <Button className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399] absolute -bottom-4 left-1/2 transform -translate-x-1/2 ">I’m Interested</Button>
+      <Button className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399] absolute -bottom-4 left-1/2 transform -translate-x-1/2 ">
+        I’m Interested
+      </Button>
     </div>
   );
 };

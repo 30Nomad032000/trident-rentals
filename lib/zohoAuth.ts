@@ -1,18 +1,18 @@
 // utils/zohoAuth.ts
 
-import fetch from "node-fetch";
-import fs from "fs";
-import path from "path";
-import dotenv from "dotenv";
+import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-const tokenPath = path.join(process.cwd(), "tokens.json");
+const tokenPath = path.join(process.cwd(), 'tokens.json');
 
 const client_id = process.env.CLIENT_ID as string;
 const client_secret = process.env.CLIENT_SECRET as string;
 
-const token_url = "https://accounts.zoho.in/oauth/v2/token";
+const token_url = 'https://accounts.zoho.in/oauth/v2/token';
 
 interface Tokens {
   refresh_token: string;
@@ -32,9 +32,9 @@ export async function getAccessToken(): Promise<string> {
   let tokens: Tokens;
 
   if (fs.existsSync(tokenPath)) {
-    tokens = JSON.parse(fs.readFileSync(tokenPath, "utf8")) as Tokens;
+    tokens = JSON.parse(fs.readFileSync(tokenPath, 'utf8')) as Tokens;
   } else {
-    throw new Error("Tokens not found. Please authorize first.");
+    throw new Error('Tokens not found. Please authorize first.');
   }
 
   const { access_token, refresh_token, expires_in, obtained_at } = tokens;
@@ -45,14 +45,14 @@ export async function getAccessToken(): Promise<string> {
   if (now > obtained_at + expires_in * 1000) {
     // Access token is expired, refresh it
     const params = new URLSearchParams();
-    params.append("grant_type", "refresh_token");
-    params.append("client_id", client_id);
-    params.append("client_secret", client_secret);
-    params.append("refresh_token", refresh_token);
+    params.append('grant_type', 'refresh_token');
+    params.append('client_id', client_id);
+    params.append('client_secret', client_secret);
+    params.append('refresh_token', refresh_token);
 
     try {
       const response = await fetch(token_url, {
-        method: "POST",
+        method: 'POST',
         body: params,
       });
       const data = (await response.json()) as ZohoTokenResponse & {
@@ -77,7 +77,7 @@ export async function getAccessToken(): Promise<string> {
       }
     } catch (error) {
       throw new Error(
-        "Failed to refresh access token: " + (error as Error).message
+        'Failed to refresh access token: ' + (error as Error).message
       );
     }
   } else {

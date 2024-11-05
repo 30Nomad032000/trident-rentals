@@ -1,6 +1,6 @@
-import { Button } from "../ui/button";
-import { CustomFontText } from "../ui/customFontText";
-import Image from "next/image";
+import { Button } from '../ui/button';
+import { CustomFontText } from '../ui/customFontText';
+import Image from 'next/image';
 
 export const Hero = () => {
   return (

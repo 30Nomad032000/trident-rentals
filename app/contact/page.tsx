@@ -1,9 +1,9 @@
-import { Footer } from "@/components/custom/footer";
-import { Header } from "@/components/custom/header";
-import { CustomFontText } from "@/components/ui/customFontText";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
+import { Footer } from '@/components/custom/footer';
+import { Header } from '@/components/custom/header';
+import { CustomFontText } from '@/components/ui/customFontText';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import Image from 'next/image';
 
 export default function Page() {
   return (
@@ -119,7 +119,7 @@ export default function Page() {
                 </div>
                 <div className="w-full">
                   <label htmlFor="state" className="text-[14px] text-white">
-                   State
+                    State
                   </label>
                   <Input
                     type="text"
@@ -129,9 +129,9 @@ export default function Page() {
                 </div>
                 <div className="w-full h-full pb-10">
                   <label htmlFor="mail" className="text-[14px] text-white">
-                   How can we help you ?
+                    How can we help you ?
                   </label>
-                  <Textarea className="h-full bg-white text-black"/>
+                  <Textarea className="h-full bg-white text-black" />
                 </div>
               </form>
             </div>

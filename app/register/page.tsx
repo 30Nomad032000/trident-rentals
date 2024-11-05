@@ -1,10 +1,10 @@
-'use-client'
+'use-client';
 
-import { Footer } from "@/components/custom/footer";
-import { Header } from "@/components/custom/header";
-import { CustomFontText } from "@/components/ui/customFontText";
-import Image from "next/image";
-import { RegisterForm } from "./components/registerForm";
+import { Footer } from '@/components/custom/footer';
+import { Header } from '@/components/custom/header';
+import { CustomFontText } from '@/components/ui/customFontText';
+import Image from 'next/image';
+import { RegisterForm } from './components/registerForm';
 
 export default function Page() {
   return (

@@ -1,4 +1,4 @@
-import { CustomFontText } from "../ui/customFontText";
+import { CustomFontText } from '../ui/customFontText';
 
 export const About = () => {
   return (

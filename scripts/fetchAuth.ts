@@ -1,8 +1,8 @@
 // scripts/getTokens.ts
 
-import fs from "fs";
-import path from "path";
-import dotenv from "dotenv";
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -11,10 +11,9 @@ const client_secret = process.env.CLIENT_SECRET as string;
 const redirect_uri = process.env.REDIRECT_URI as string;
 const auth_code = process.env.AUTH_CODE as string; // Temporary storage since it's valid for only 10 minutes
 
-console.log(client_id,client_secret,redirect_uri,auth_code)
+console.log(client_id, client_secret, redirect_uri, auth_code);
 
-
-const token_url = "https://accounts.zoho.in/oauth/v2/token";
+const token_url = 'https://accounts.zoho.in/oauth/v2/token';
 
 interface ZohoTokenResponse {
   access_token: string;
@@ -33,15 +32,15 @@ interface Tokens {
 
 (async () => {
   const params = new URLSearchParams();
-  params.append("grant_type", "authorization_code");
-  params.append("client_id", client_id);
-  params.append("client_secret", client_secret);
-  params.append("redirect_uri", redirect_uri);
-  params.append("code", auth_code);
+  params.append('grant_type', 'authorization_code');
+  params.append('client_id', client_id);
+  params.append('client_secret', client_secret);
+  params.append('redirect_uri', redirect_uri);
+  params.append('code', auth_code);
 
   try {
     const response = await fetch(token_url, {
-      method: "POST",
+      method: 'POST',
       body: params,
     });
 
@@ -50,7 +49,7 @@ interface Tokens {
     };
 
     if (data.error) {
-      console.error("Error:", data.error);
+      console.error('Error:', data.error);
     } else {
       const { access_token, refresh_token, expires_in } = data;
 
@@ -62,12 +61,12 @@ interface Tokens {
         obtained_at: Date.now(),
       };
 
-      const tokenPath = path.join(process.cwd(), "tokens.json");
+      const tokenPath = path.join(process.cwd(), 'tokens.json');
       fs.writeFileSync(tokenPath, JSON.stringify(tokens));
 
-      console.log("Tokens obtained and stored successfully");
+      console.log('Tokens obtained and stored successfully');
     }
   } catch (error) {
-    console.error("Error:", (error as Error).message);
+    console.error('Error:', (error as Error).message);
   }
 })();

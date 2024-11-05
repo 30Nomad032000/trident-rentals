@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { CustomFontText } from "../ui/customFontText";
+import Image from 'next/image';
+import { CustomFontText } from '../ui/customFontText';
 
 export const Mission = () => {
   return (
