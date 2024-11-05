@@ -53,8 +53,8 @@ export default function PropertyModal({
             <CarouselOrientation />
           </div>
           <div className="flex flex-col gap-y-16 h-full">
-            <div className="flex gap-6 items-center justify-start">
-              <div className="flex lg:flex-row flex-col items-center justify-center text-[#172540]">
+            <div className="flex lg:flex-row flex-col gap-6 items-center justify-start">
+              <div className="flex items-center justify-center text-[#172540]">
                 <span className="font-bold text-2xl lg:text-[32px]">
                   $ {property?.Price}
                 </span>
