@@ -17,23 +17,19 @@ export async function onSubmitAction(
     data: formData,
   };
 
-  console.log(payload);
-
   try {
     const response = await fetch(url, {
       headers: {
         Authorization: `Zoho-oauthtoken ${token}`,
       },
       method: 'POST',
-      cache: 'no-store',
       body: JSON.stringify(payload),
     });
-
-    console.log(response.status);
+    const res = await response.json();
+    return res;
   } catch (e: unknown) {
     const typedError = e as { message: string };
     console.log(typedError?.message);
+    return { message: typedError.message };
   }
-
-  return { message: 'User registered' };
 }

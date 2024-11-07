@@ -7,11 +7,12 @@ import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { onSubmitAction } from './formSubmit';
+import { toast } from 'sonner';
 
 export const contactSchema = z.object({
   firstName: z.string().min(1, { message: 'First Name is required' }),
   lastName: z.string().min(1, { message: 'Last Name is required' }),
-  email: z.string().email(),
+  email: z.string().min(1, { message: 'Email is required' }).email(),
   phoneNumber: z.string().min(1, { message: 'Phone Number is required' }),
   state: z.string().min(1, { message: 'State is required' }),
   additionalText: z.string().optional(),
@@ -27,6 +28,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<z.output<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -39,14 +41,24 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
     },
   });
 
-  const onSubmit = (data: z.output<typeof contactSchema>) => {
+  const onSubmit = async (data: z.output<typeof contactSchema>) => {
     const formData = new FormData();
     formData.append('Name', data.firstName + ' ' + data.lastName);
-    formData.append('Phone', data.phoneNumber);
+    formData.append('Phone_Number', data.phoneNumber);
     formData.append('Email', data.email);
     formData.append('State', data.state);
     formData.append('More_Info', data.additionalText || '');
-    onSubmitAction(formData, token || '');
+    const res = await onSubmitAction(formData, token || '');
+    if (res.message === 'Data Added Successfully') {
+      reset();
+      toast.success(
+        "Thank you! 🎉 Your message has been received. We'll be in touch shortly!"
+      );
+    } else {
+      toast.error(
+        'Please ensure all required fields are filled out correctly and try again.'
+      );
+    }
   };
 
   return (
@@ -56,7 +68,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
     >
       <div className="text-xl text-white font-medium">Contact Us</div>
       <div className="grid grid-cols-2 gap-x-8 w-full ">
-        <div>
+        <div className="relative">
           <label htmlFor="firstName" className="text-[14px] text-white">
             First Name
           </label>
@@ -67,12 +79,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
             {...register('firstName')}
           />
           {errors.firstName?.message && (
-            <p className="text-xs text-red-500 pt-2">
+            <p className="text-xs text-red-500 absolute -bottom-5">
               {String(errors.firstName?.message)}
             </p>
           )}
         </div>
-        <div className="w-full">
+        <div className="w-full relative">
           <label htmlFor="lastName" className="text-[14px] text-white">
             Last Name
           </label>
@@ -83,13 +95,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
             {...register('lastName')}
           />
           {errors.lastName?.message && (
-            <p className="text-xs text-red-500 pt-2">
+            <p className="text-xs text-red-500 absolute -bottom-5">
               {String(errors.lastName?.message)}
             </p>
           )}
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full relative">
         <label htmlFor="mail" className="text-[14px] text-white">
           Email
         </label>
@@ -100,12 +112,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
           {...register('email')}
         />
         {errors.email?.message && (
-          <p className="text-xs text-red-500 pt-2">
+          <p className="text-xs text-red-500 absolute -bottom-5">
             {String(errors.email?.message)}
           </p>
         )}
       </div>
-      <div className="w-full">
+      <div className="w-full relative">
         <label htmlFor="phone" className="text-[14px] text-white">
           Phone Number
         </label>
@@ -121,12 +133,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
           )}
         />
         {errors.phoneNumber?.message && (
-          <p className="text-xs text-red-500 pt-2">
+          <p className="text-xs text-red-500 absolute -bottom-5">
             {String(errors.phoneNumber?.message)}
           </p>
         )}
       </div>
-      <div className="w-full">
+      <div className="w-full relative">
         <label htmlFor="state" className="text-[14px] text-white">
           State
         </label>
@@ -137,12 +149,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
           {...register('state')}
         />
         {errors.state?.message && (
-          <p className="text-xs text-red-500 pt-2">
+          <p className="text-xs text-red-500 absolute -bottom-5">
             {String(errors.state?.message)}
           </p>
         )}
       </div>
-      <div className="w-full h-full">
+      <div className="w-full h-full relative">
         <label htmlFor="mail" className="text-[14px] text-white">
           How can we help you ?
         </label>
