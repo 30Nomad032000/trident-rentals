@@ -18,8 +18,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "buffer": ["./node_modules/buffer"]
+      "@/*": ["./*"]
     },
     "target": "ES2017"
   },

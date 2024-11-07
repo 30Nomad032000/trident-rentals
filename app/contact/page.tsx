@@ -1,8 +1,6 @@
 import { Footer } from '@/components/custom/footer';
 import { Header } from '@/components/custom/header';
 import { CustomFontText } from '@/components/ui/customFontText';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
 import { ContactForm } from './components/contactForm';
 import { getAccessToken } from '@/lib/zohoAuth';

@@ -7,7 +7,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { onSubmitAction } from './formSubmit';
-import { getAccessToken } from '@/lib/zohoAuth';
 
 export const contactSchema = z.object({
   firstName: z.string().min(1, { message: 'First Name is required' }),
@@ -43,8 +42,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
   const onSubmit = (data: z.output<typeof contactSchema>) => {
     const formData = new FormData();
     formData.append('Name', data.firstName + ' ' + data.lastName);
-    formData.append('lastName', data.lastName);
-    formData.append('phone', data.phoneNumber);
+    formData.append('Phone', data.phoneNumber);
     formData.append('Email', data.email);
     formData.append('State', data.state);
     formData.append('More_Info', data.additionalText || '');

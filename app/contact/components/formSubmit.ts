@@ -13,6 +13,12 @@ export async function onSubmitAction(
   const url =
     'https://www.zohoapis.in/creator/v2.1/data/demo13cloudq/trident-data-demo/form/Contact_Us';
 
+  const payload = {
+    data: formData,
+  };
+
+  console.log(payload);
+
   try {
     const response = await fetch(url, {
       headers: {
@@ -20,10 +26,10 @@ export async function onSubmitAction(
       },
       method: 'POST',
       cache: 'no-store',
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     });
 
-    console.log(response);
+    console.log(response.status);
   } catch (e: unknown) {
     const typedError = e as { message: string };
     console.log(typedError?.message);
