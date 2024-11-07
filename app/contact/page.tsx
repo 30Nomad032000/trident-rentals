@@ -4,8 +4,11 @@ import { CustomFontText } from '@/components/ui/customFontText';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
+import { ContactForm } from './components/contactForm';
+import { getAccessToken } from '@/lib/zohoAuth';
 
-export default function Page() {
+export default async function Page() {
+  const token = await getAccessToken();
   return (
     <>
       <Header />
@@ -56,7 +59,7 @@ export default function Page() {
                   6110 McFarland Station Drive, Suite #904
                 </div>
               </div>
-              <div className="px-14 py-14">
+              <div className="px-14 py-16">
                 <Image
                   src="/map.svg"
                   alt="map"
@@ -67,73 +70,7 @@ export default function Page() {
               </div>
             </div>
             <div className="pr-48 py-10 ">
-              <form className="h-full w-full lg:max-w-[590px] bg-gray-100 rounded-[20px] bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-40 flex flex-col gap-5 items-center border p-6 border-white">
-                <div className="text-xl text-white font-medium">Contact Us</div>
-                <div className="grid grid-cols-2 gap-x-8 w-full">
-                  <div>
-                    <label
-                      htmlFor="firstName"
-                      className="text-[14px] text-white"
-                    >
-                      First Name
-                    </label>
-                    <Input
-                      type="text"
-                      id="firstName"
-                      className="bg-white text-black border border-white"
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label
-                      htmlFor="lastName"
-                      className="text-[14px] text-white"
-                    >
-                      Last Name
-                    </label>
-                    <Input
-                      type="text"
-                      id="lastName"
-                      className="bg-white text-black border border-white"
-                    />
-                  </div>
-                </div>
-                <div className="w-full">
-                  <label htmlFor="mail" className="text-[14px] text-white">
-                    Email
-                  </label>
-                  <Input
-                    type="text"
-                    id="mail"
-                    className="bg-white text-black border border-white"
-                  />
-                </div>
-                <div className="w-full">
-                  <label htmlFor="phone" className="text-[14px] text-white">
-                    Phone Number
-                  </label>
-                  <Input
-                    type="text"
-                    id="phone"
-                    className="bg-white text-black border border-white"
-                  />
-                </div>
-                <div className="w-full">
-                  <label htmlFor="state" className="text-[14px] text-white">
-                    State
-                  </label>
-                  <Input
-                    type="text"
-                    id="state"
-                    className="bg-white text-black border border-white"
-                  />
-                </div>
-                <div className="w-full h-full pb-10">
-                  <label htmlFor="mail" className="text-[14px] text-white">
-                    How can we help you ?
-                  </label>
-                  <Textarea className="h-full bg-white text-black" />
-                </div>
-              </form>
+              <ContactForm token={token} />
             </div>
           </div>
         </div>

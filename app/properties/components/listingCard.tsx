@@ -51,7 +51,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <Card
-      className="w-full max-w-sm mx-auto hover:shadow-md px-2 py-2 h-auto flex flex-col hover:cursor-pointer"
+      className="w-full max-w-sm mx-auto hover:shadow-md px-2 py-2 h-fit flex flex-col hover:cursor-pointer"
       onClick={handleCardClick}
     >
       <img
@@ -106,7 +106,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
                 width={100}
                 className="size-5"
               />
-              <span>{address}</span>
+              <span className="w-full h-[20px] truncate">{address}</span>
             </div>
           </div>
         </div>
