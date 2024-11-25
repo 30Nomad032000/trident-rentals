@@ -4,6 +4,7 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { NavigationMenuRegister } from './navigationMenu';
 
 export const Header = () => {
   const pathName = usePathname();
@@ -48,7 +49,7 @@ export const Header = () => {
                   : ''
               )}
             >
-              <Link href={'/register'}> Register As</Link>
+              <NavigationMenuRegister />
             </div>
           </div>
           <Link href="/contact">

@@ -15,6 +15,7 @@ import {
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import type { Property } from '../types';
+import { getImageUrl } from '@/lib/utils';
 interface PropertyModalProps {
   isOpen?: boolean;
   property: Property | undefined;
@@ -50,7 +51,7 @@ export default function PropertyModal({
       <DialogContent className="px-12 py-12 md:max-w-6xl max-h-[90vh] bg-gray-100">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-8">
           <div className="lg:pr-6 lg:border-r h-full">
-            <CarouselOrientation />
+            <CarouselOrientation property={property} />
           </div>
           <div className="flex flex-col gap-y-16 h-full">
             <div className="flex lg:flex-row flex-col gap-6 items-center justify-start">
@@ -151,19 +152,25 @@ export default function PropertyModal({
   );
 }
 
-export const CarouselOrientation = () => {
+interface CarouselOrientationProps {
+  property: Property | undefined;
+}
+
+export const CarouselOrientation: React.FC<CarouselOrientationProps> = ({
+  property,
+}) => {
   return (
     <Carousel className="h-full">
       <CarouselNext className="top-1/4 -translate-y-1/3" />
       <CarouselPrevious className="top-1/4 -translate-y-1/3" />
       <CarouselMainContainer className="h-60">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {property?.Property_Images.map((item, index) => (
           <SliderMainItem
             key={index}
             className="bg-transparent flex items-center justify-center"
           >
             <Image
-              src="/tridentLogo.svg"
+              src={getImageUrl(property.ID, item.Image)}
               alt="image"
               height={100}
               width={100}
@@ -173,10 +180,10 @@ export const CarouselOrientation = () => {
         ))}
       </CarouselMainContainer>
       <CarouselThumbsContainer>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {property?.Property_Images.map((item, index) => (
           <SliderThumbItem key={index} index={index} className="bg-transparent">
             <Image
-              src="/tridentLogo.svg"
+              src={getImageUrl(property.ID, item.Image)}
               alt="image"
               height={100}
               width={100}

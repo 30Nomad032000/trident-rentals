@@ -6,11 +6,17 @@ import { CustomFontText } from '@/components/ui/customFontText';
 import Image from 'next/image';
 import { RegisterForm } from './components/registerForm';
 
-export default function Page() {
+interface PageProps {
+  searchParams?: Promise<{ [key: string]: string | undefined } | undefined>;
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const q = resolvedSearchParams?.q;
   return (
     <>
       <Header />
-      <div className="container mx-auto px-4 py-20 grid grid-cols-1 lg:grid-cols-2 gap-x-5">
+      <div className="container mx-auto px-4 py-20 grid grid-cols-1 lg:grid-cols-2 gap-x-8">
         <div>
           <div className="flex gap-2">
             <CustomFontText className="text-2xl font-bold sm:text-4xl lg:text-4xl 2xl:text-5xl">
@@ -32,7 +38,7 @@ export default function Page() {
         </div>
         <div>
           <div className="text-[#172540] text-2xl font-semibold flex justify-center pb-3">
-            Register As A tenant
+            Register as a&nbsp;<span className="capitalize">{q}</span>
           </div>
           <RegisterForm />
         </div>

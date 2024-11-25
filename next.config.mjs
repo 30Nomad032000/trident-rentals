@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'creatorapp.zoho.in',
+        hostname: 'creatorapp.zohopublic.in',
         pathname: '/**',
       },
     ],

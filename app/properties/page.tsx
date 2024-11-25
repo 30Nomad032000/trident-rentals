@@ -26,6 +26,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Filter } from 'lucide-react';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import PropertyModal from './components/listingPopup';
+import { getImageUrl } from '@/lib/utils';
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | undefined } | undefined>;
@@ -33,7 +34,6 @@ interface PageProps {
 
 export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
-
   const bathrooms = resolvedSearchParams?.bathrooms ?? '1';
   const bedrooms = resolvedSearchParams?.bedrooms ?? '1';
   const search = resolvedSearchParams?.search ?? '';
@@ -124,10 +124,7 @@ export default async function Page({ searchParams }: PageProps) {
             ) : (
               result.data.map((item, index) => (
                 <ListingCard
-                  image={item.Property_Images[0].Image.replace(
-                    '/api/v2.1/',
-                    'https://creatorapp.zoho.in/'
-                  )}
+                  image={getImageUrl(item.ID, item.Property_Images[0].Image)}
                   index={index}
                   space={item.Sq_Feet}
                   name={item.Property_Name}

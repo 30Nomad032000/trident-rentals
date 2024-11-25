@@ -28,7 +28,6 @@ export const ListingCard: React.FC<ListingCardProps> = ({
   price,
   index,
 }) => {
-  console.log(image);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -55,11 +54,11 @@ export const ListingCard: React.FC<ListingCardProps> = ({
       onClick={handleCardClick}
     >
       <img
-        src={'/tridentLogo.svg'}
+        src={image}
         alt={name}
         width={253}
         height={144}
-        className={cn('rounded-lg w-auto h-[166px] bg-cover', 'object-contain')}
+        className={cn('rounded-lg w-auto h-[166px] bg-cover', 'object-cover')}
       />
       <CardContent className="p-2 flex-grow">
         <div className="flex flex-col gap-6">

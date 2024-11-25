@@ -126,6 +126,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
           name="phoneNumber"
           render={({ field }) => (
             <PhoneInput
+              className="bg-transparent border-white"
               onChange={field.onChange}
               onBlur={field.onBlur}
               value={field.value}
