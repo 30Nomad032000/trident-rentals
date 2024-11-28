@@ -5,7 +5,7 @@ export default async function Home() {
     const token = await getAccessToken();
     console.log('Access Token:', token);
     const response = await fetch(
-      'https://www.zohoapis.in/creator/v2.1/data/demo13cloudq/trident-data-demo/report/All_Property_Details',
+      'https://www.zohoapis.com/creator/v2.1/data/tridentrental/trident-rental/report/All_Properties',
       {
         headers: {
           Authorization: `Zoho-oauthtoken ${token}`,

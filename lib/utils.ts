@@ -16,7 +16,7 @@ export const getImageUrl = (imageId: string, imageUrl: string): string => {
   const filepath = match ? match[1] : null;
 
   // Construct the file URL
-  const fileUrl: string = `https://creator.zoho.com/creator/v2.1/data/data/tridentrental/trident-rental/report/All_Property_Images/${imageId}/Property_Images.Image/download-file/DEjdKp3FN3eTxr4u4v7H21HMvNJ16aUOnM6zGr96WbB71SOddz59pbsmwGUMk0EnC7GR5jCWpdQbjxtwX8b58hTbTV5JRwj6g86g?filepath=/${filepath}&mediaType=1`;
+  const fileUrl: string = `https://creatorapp.zohopublic.com/tridentrental/trident-rental/report/All_Property_Images/${imageId}/Upload_your_Image_here/download-file/XmOdknjNP5KpZaA6uMatzwvTYxaSNYrXCTaHTDdSdy66rPyyqx3ztvQSgDPWOmVTQEkqBH6A1SbWE3n2sDCddGsDC9U90bnRMB4S?filepath=/${filepath}&mediaType=1`;
   // Output the file URL
   return fileUrl;
 };

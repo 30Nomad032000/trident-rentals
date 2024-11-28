@@ -41,7 +41,7 @@ export default async function Page({ searchParams }: PageProps) {
   const rent = resolvedSearchParams?.rent ?? '0,100000';
   const isOpen =
     resolvedSearchParams?.isOpen?.split(',')[0] === 'true' ? true : false;
-  const item = resolvedSearchParams?.isOpen?.split(',')[1];
+  const item = resolvedSearchParams?.isOpen?.split(',')[1] ?? 0;
   const typeCriteria =
     types.length === 0
       ? ''
@@ -50,10 +50,10 @@ export default async function Page({ searchParams }: PageProps) {
           .filter((item) => item.trim() !== '')
           .map((item) => `Type_field == "${item}"`)
           .join(' || ');
-  const rentCriteria = `&& Price >= ${rent.split(',')[0]} && Price <= ${
-    rent.split(',')[1]
-  }`;
-  const criteria = `(No_of_Bathroom >= ${bathrooms} && No_Of_Bedroom >= ${bedrooms} && Property_Name.contains("${search}") ${
+  const rentCriteria = `&& Rent_Amount >= ${
+    rent.split(',')[0]
+  } && Rent_Amount <= ${rent.split(',')[1]}`;
+  const criteria = `(Number_Of_Bathrooms >= ${bathrooms} && Number_Of_Bedrooms >= ${bedrooms} && Property_Name.contains("${search}") ${
     types.length !== 0 ? '&& ' : ''
   } ${typeCriteria} ${rentCriteria})`;
   const token = await getAccessToken();
@@ -124,14 +124,17 @@ export default async function Page({ searchParams }: PageProps) {
             ) : (
               result.data.map((item, index) => (
                 <ListingCard
-                  image={getImageUrl(item.ID, item.Property_Images[0].Image)}
+                  image={getImageUrl(
+                    item.Property_Image1[0].ID,
+                    item.Property_Image1[0].Upload_your_Image_here
+                  )}
                   index={index}
-                  space={item.Sq_Feet}
+                  space={item.Property_Size}
                   name={item.Property_Name}
-                  bedrooms={item.No_Of_Bedroom}
-                  bathrooms={item.No_of_Bathroom}
+                  bedrooms={item.Number_Of_Bedrooms}
+                  bathrooms={item.Number_Of_Bathrooms}
                   address={item.Property_Address.zc_display_value}
-                  price={item.Price}
+                  price={item.Rent_Amount}
                   key={index}
                 />
               ))
@@ -174,15 +177,15 @@ async function fetchPropertyData(
   token: string,
   encodedCriteria: string
 ): Promise<ZohoData | null> {
+  console.log(token);
   try {
     const response = await fetch(
-      `https://creator.zoho.com/creator/v2.1/data/data/tridentrental/trident-rental/report/All_Properties?criteria=${encodedCriteria}`,
+      `https://www.zohoapis.com/creator/v2.1/data/tridentrental/trident-rental/report/All_Properties?criteria=${encodedCriteria}`,
       {
         headers: {
           Authorization: `Zoho-oauthtoken ${token}`,
         },
         method: 'GET',
-        cache: 'no-store',
       }
     );
 
@@ -192,10 +195,12 @@ async function fetchPropertyData(
       console.log('Error Response:', responseBody);
       return null;
     }
+    console.log(responseBody);
 
     const parsedData: ZohoData = JSON.parse(responseBody);
     return parsedData;
   } catch (error: unknown) {
+    console.log(error);
     const typedError = error as { message: string };
     console.log('Error fetching property data:', typedError.message);
     return null;

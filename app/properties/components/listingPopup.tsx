@@ -57,7 +57,7 @@ export default function PropertyModal({
             <div className="flex lg:flex-row flex-col gap-6 items-center justify-start">
               <div className="flex items-center justify-center text-[#172540]">
                 <span className="font-bold text-2xl lg:text-[32px]">
-                  $ {property?.Price}
+                  $ {property?.Rent_Amount}
                 </span>
                 &nbsp;/ monthly
               </div>
@@ -79,9 +79,7 @@ export default function PropertyModal({
                     width={100}
                     className="size-6"
                   />
-                  <div className="text-base font-medium text-[#172540]">
-                    {property?.Type_field}
-                  </div>
+                  <div className="text-base font-medium text-[#172540]"></div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <Image
@@ -104,7 +102,7 @@ export default function PropertyModal({
                     className="size-6"
                   />
                   <div className="text-base font-medium text-[#172540]">
-                    {property?.Sq_Feet} sqft
+                    {property?.Property_Size} sqft
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -116,7 +114,7 @@ export default function PropertyModal({
                     className="size-6"
                   />
                   <div className="text-base font-medium text-[#172540]">
-                    {property?.No_Of_Bedroom} bedrooms
+                    {property?.Number_Of_Bedrooms} bedrooms
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -128,7 +126,7 @@ export default function PropertyModal({
                     className="size-6"
                   />
                   <div className="text-base font-medium text-[#172540]">
-                    {property?.No_of_Bathroom} bathrooms
+                    {property?.Number_Of_Bathrooms} bathrooms
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -140,7 +138,7 @@ export default function PropertyModal({
                     className="size-6"
                   />
                   <div className="text-base font-medium text-[#172540]">
-                    {property?.Car_Parking} car parking
+                    car parking
                   </div>
                 </div>
               </div>
@@ -164,30 +162,30 @@ export const CarouselOrientation: React.FC<CarouselOrientationProps> = ({
       <CarouselNext className="top-1/4 -translate-y-1/3" />
       <CarouselPrevious className="top-1/4 -translate-y-1/3" />
       <CarouselMainContainer className="h-60">
-        {property?.Property_Images.map((item, index) => (
+        {property?.Property_Image1?.map((item, index) => (
           <SliderMainItem
             key={index}
             className="bg-transparent flex items-center justify-center"
           >
-            <Image
-              src={getImageUrl(property.ID, item.Image)}
+            <img
+              src={getImageUrl(item.ID, item.Upload_your_Image_here)}
               alt="image"
               height={100}
               width={100}
-              className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-background"
+              className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-cover object-fill"
             />
           </SliderMainItem>
         ))}
       </CarouselMainContainer>
       <CarouselThumbsContainer>
-        {property?.Property_Images.map((item, index) => (
+        {property?.Property_Image1?.map((item, index) => (
           <SliderThumbItem key={index} index={index} className="bg-transparent">
-            <Image
-              src={getImageUrl(property.ID, item.Image)}
+            <img
+              src={getImageUrl(item.ID, item.Upload_your_Image_here)}
               alt="image"
               height={100}
               width={100}
-              className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-background"
+              className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-background object-fill"
             />
           </SliderThumbItem>
         ))}
