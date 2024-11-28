@@ -13,7 +13,7 @@ const auth_code = process.env.AUTH_CODE as string; // Temporary storage since it
 
 console.log(client_id, client_secret, redirect_uri, auth_code);
 
-const token_url = 'https://accounts.zoho.in/oauth/v2/token';
+const token_url = 'https://accounts.zoho.com/oauth/v2/token';
 
 interface ZohoTokenResponse {
   access_token: string;

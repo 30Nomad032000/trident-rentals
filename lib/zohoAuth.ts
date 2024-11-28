@@ -10,7 +10,7 @@ const redis = Redis.fromEnv();
 const client_id = process.env.CLIENT_ID as string;
 const client_secret = process.env.CLIENT_SECRET as string;
 
-const token_url = 'https://accounts.zoho.in/oauth/v2/token';
+const token_url = 'https://accounts.zoho.com/oauth/v2/token';
 
 interface Tokens {
   refresh_token: string;

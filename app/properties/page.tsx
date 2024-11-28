@@ -176,7 +176,7 @@ async function fetchPropertyData(
 ): Promise<ZohoData | null> {
   try {
     const response = await fetch(
-      `https://www.zohoapis.in/creator/v2.1/data/demo13cloudq/trident-data-demo/report/All_Property_Details?criteria=${encodedCriteria}`,
+      `https://creator.zoho.com/creator/v2.1/data/data/tridentrental/trident-rental/report/All_Properties?criteria=${encodedCriteria}`,
       {
         headers: {
           Authorization: `Zoho-oauthtoken ${token}`,
