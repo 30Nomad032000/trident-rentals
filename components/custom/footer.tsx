@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -28,15 +29,20 @@ export const Footer = () => {
           {/* Links */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             <div className="flex flex-col gap-2 md:gap-4">
-              <div>Home</div>
-              <div>About</div>
-              <div>Properties</div>
-              <div>Register As</div>
+              <div>
+                <Link href="/">Home</Link>
+              </div>
+              <div>
+                <Link href="/properties">Properties</Link>
+              </div>
+              <div>
+                <Link href="/contact">Contact Us</Link>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 md:gap-4">
+            {/* <div className="flex flex-col gap-2 md:gap-4">
               <div className="whitespace-nowrap">Terms and Conditions</div>
               <div>Privacy Policy</div>
-            </div>
+            </div> */}
           </div>
 
           {/* Contact */}
@@ -50,7 +56,11 @@ export const Footer = () => {
                 height={24}
                 className="w-5 h-5"
               />
-              <span className="text-sm md:text-base">678 983 2042</span>
+              <span className="text-sm md:text-base">
+                <a href="tel:678 983 2042" type="tel">
+                  678 983 2042
+                </a>
+              </span>
             </div>
             <div className="flex gap-3 md:gap-4 items-center">
               <Image
@@ -60,7 +70,9 @@ export const Footer = () => {
                 height={24}
                 className="w-5 h-5"
               />
-              <span className="text-sm md:text-base">info@tridentrent.com</span>
+              <span className="text-sm md:text-base">
+                <a href="mailto:info@tridentrent.com">info@tridentrent.com</a>
+              </span>
             </div>
             <div className="flex gap-3 md:gap-4 items-center">
               <Image
@@ -71,7 +83,12 @@ export const Footer = () => {
                 className="w-5 h-5"
               />
               <span className="text-sm md:text-base">
-                6110 McFarland Station Drive, Suite #904
+                <a
+                  href="https://maps.app.goo.gl/bvoZQpCQ5qazU57SA"
+                  target="_blank"
+                >
+                  6110 McFarland Station Drive, Suite #904
+                </a>
               </span>
             </div>
           </div>

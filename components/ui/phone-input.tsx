@@ -99,7 +99,7 @@ const CountrySelect = ({
           type="button"
           variant={'outline'}
           className={cn(
-            'flex gap-1 rounded-e-none rounded-s-lg bg-transparent hover:bg-transparent h-11 border-white px-3'
+            'flex gap-1 rounded-e-none rounded-s-lg bg-transparent hover:bg-transparent h-11 border-input px-3'
           )}
           disabled={disabled}
         >

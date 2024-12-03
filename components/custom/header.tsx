@@ -5,16 +5,22 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { NavigationMenuRegister } from './navigationMenu';
+import * as React from 'react';
+import { Menu } from 'lucide-react';
+import { useState } from 'react';
 
 export const Header = () => {
   const pathName = usePathname();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div
       className={cn(
-        pathName === '/properties' ? '' : 'border-b border-[#CBCBCB] '
+        pathName === '/properties' ? '' : 'border-b border-[#CBCBCB]'
       )}
     >
-      <div className="container mx-auto flex justify-center lg:justify-between items-center h-[100px] px-4">
+      <div className="container mx-auto flex justify-between items-center h-[100px] px-4">
         <Image
           src="/tridentLogo.svg"
           className="w-[200px] h-[45px]"
@@ -22,8 +28,24 @@ export const Header = () => {
           height={100}
           alt="Trident Rentals Logo"
         />
-        <div className=" justify-center items-center gap-6 hidden lg:flex">
-          <div className="flex justify-center items-center gap-10 font-semibold text-base text-[#393939]">
+        <div className="lg:hidden">
+          <button
+            className="text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <Menu />
+          </button>
+        </div>
+        <div
+          className={cn(
+            'justify-center items-center gap-6',
+            menuOpen
+              ? 'flex flex-col absolute top-[100px] left-0 w-full bg-white z-50 p-4'
+              : 'hidden',
+            'lg:flex lg:flex-row lg:static lg:w-auto lg:bg-transparent lg:p-0'
+          )}
+        >
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-10 xs:gap-16 sm:gap-16 md:gap-16 font-semibold text-base text-[#393939]">
             <div
               className={cn(
                 pathName === '/'
@@ -57,7 +79,6 @@ export const Header = () => {
               Contact Us
             </Button>
           </Link>
-
           <Link href="https://tridentrentalllc.zohocreatorportal.com/">
             <Button
               variant="outline"

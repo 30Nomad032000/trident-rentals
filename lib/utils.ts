@@ -6,7 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getImageUrl = (imageId: string, imageUrl: string): string => {
-  console.log(imageId, 'imageId', imageUrl, 'imageUrl');
   if (!imageUrl) {
     console.error('Image URL is required.');
     return '';

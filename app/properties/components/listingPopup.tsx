@@ -16,6 +16,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import type { Property } from '../types';
 import { getImageUrl } from '@/lib/utils';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 interface PropertyModalProps {
   isOpen?: boolean;
   property: Property | undefined;
@@ -71,7 +73,7 @@ export default function PropertyModal({
               </div>
 
               <div className="grid grid-cols-2 gap-x-8 gap-y-8 ">
-                <div className="flex flex-col gap-2">
+                {/* <div className="flex flex-col gap-2">
                   <Image
                     src="/house.svg"
                     alt="house"
@@ -80,7 +82,7 @@ export default function PropertyModal({
                     className="size-6"
                   />
                   <div className="text-base font-medium text-[#172540]"></div>
-                </div>
+                </div> */}
                 <div className="flex flex-col gap-2">
                   <Image
                     src="/pin.svg"
@@ -129,7 +131,7 @@ export default function PropertyModal({
                     {property?.Number_Of_Bathrooms} bathrooms
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
+                {/* <div className="flex flex-col gap-2">
                   <Image
                     src="/car.svg"
                     alt="house"
@@ -140,7 +142,7 @@ export default function PropertyModal({
                   <div className="text-base font-medium text-[#172540]">
                     car parking
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -159,34 +161,46 @@ export const CarouselOrientation: React.FC<CarouselOrientationProps> = ({
 }) => {
   return (
     <Carousel className="h-full">
-      <CarouselNext className="top-1/4 -translate-y-1/3" />
-      <CarouselPrevious className="top-1/4 -translate-y-1/3" />
-      <CarouselMainContainer className="h-60">
+      <CarouselNext className="top-1/3 -translate-y-1/3" />
+      <CarouselPrevious className="top-1/3 -translate-y-1/3" />
+      <CarouselMainContainer className="h-96">
         {property?.Property_Image1?.map((item, index) => (
           <SliderMainItem
             key={index}
             className="bg-transparent flex items-center justify-center"
           >
-            <img
-              src={getImageUrl(item.ID, item.Upload_your_Image_here)}
-              alt="image"
-              height={100}
-              width={100}
-              className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-cover object-fill"
-            />
+            <PhotoProvider>
+              <PhotoView
+                src={getImageUrl(item.ID, item.Upload_your_Image_here)}
+              >
+                <img
+                  src={getImageUrl(item.ID, item.Upload_your_Image_here)}
+                  alt="image"
+                  height={100}
+                  width={100}
+                  className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-cover object-cover"
+                />
+              </PhotoView>
+            </PhotoProvider>
           </SliderMainItem>
         ))}
       </CarouselMainContainer>
       <CarouselThumbsContainer>
         {property?.Property_Image1?.map((item, index) => (
           <SliderThumbItem key={index} index={index} className="bg-transparent">
-            <img
-              src={getImageUrl(item.ID, item.Upload_your_Image_here)}
-              alt="image"
-              height={100}
-              width={100}
-              className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-background object-fill"
-            />
+            <PhotoProvider>
+              <PhotoView
+                src={getImageUrl(item.ID, item.Upload_your_Image_here)}
+              >
+                <img
+                  src={getImageUrl(item.ID, item.Upload_your_Image_here)}
+                  alt="image"
+                  height={100}
+                  width={100}
+                  className="outline outline-1 outline-border size-full flex items-center justify-center rounded-xl bg-cover object-cover"
+                />
+              </PhotoView>
+            </PhotoProvider>
           </SliderThumbItem>
         ))}
       </CarouselThumbsContainer>

@@ -58,7 +58,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
         alt={name}
         width={253}
         height={144}
-        className={cn('rounded-lg w-auto h-[166px] bg-cover', 'object-cover')}
+        className={cn('rounded-lg w-auto h-[260px] bg-cover', 'object-cover')}
       />
       <CardContent className="p-2 flex-grow">
         <div className="flex flex-col gap-6">
