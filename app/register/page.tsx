@@ -5,6 +5,7 @@ import { Header } from '@/components/custom/header';
 import { CustomFontText } from '@/components/ui/customFontText';
 import Image from 'next/image';
 import { RegisterForm } from './components/registerForm';
+import { getAccessToken } from '@/lib/zohoAuth';
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | undefined } | undefined>;
@@ -13,6 +14,7 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
   const q = resolvedSearchParams?.q;
+  const token = await getAccessToken();
   return (
     <>
       <Header />
@@ -40,7 +42,7 @@ export default async function Page({ searchParams }: PageProps) {
           <div className="text-[#172540] text-2xl font-semibold flex justify-center pb-3">
             Register as a&nbsp;<span className="capitalize">{q}</span>
           </div>
-          <RegisterForm />
+          <RegisterForm type={q || ''} token={token} />
         </div>
       </div>
       <Footer />

@@ -7,6 +7,9 @@ import { PhoneInput } from '@/components/ui/phone-input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { AwesomeCaptcha } from 'react-awesome-captcha/index';
+import { toast } from 'sonner';
+import { onSubmitAction } from '../server actions/formSubmit';
 
 export const registerSchema = z.object({
   firstName: z.string().min(1, { message: 'First Name is required' }),
@@ -14,13 +17,25 @@ export const registerSchema = z.object({
   email: z.string().min(1, { message: 'Email is required' }).email(),
   phoneNumber: z.string().min(1, { message: 'Phone Number is required' }),
   agree: z.boolean(),
+  captchaBoolean: z.boolean(),
 });
 
-export const RegisterForm = () => {
+interface RegisterationFormProps {
+  type: string;
+  token: string;
+}
+
+export const RegisterForm: React.FC<RegisterationFormProps> = ({
+  type,
+  token,
+}) => {
   const {
     register,
     formState: { errors },
     control,
+    setValue,
+    handleSubmit,
+    reset,
   } = useForm<z.output<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -28,13 +43,50 @@ export const RegisterForm = () => {
       lastName: '',
       email: '',
       phoneNumber: '',
+      agree: false,
+      captchaBoolean: false,
     },
   });
+
+  const handleCaptchaValidate = (isValid: boolean) => {
+    setValue('captchaBoolean', isValid);
+  };
+
+  const handleAgreeClick = (bool: boolean) => {
+    setValue('agree', bool);
+  };
+
+  const onSubmit = async (data: z.output<typeof registerSchema>) => {
+    if (!data.captchaBoolean) {
+      toast.error('Verification failed. Please try again.');
+    } else {
+      if (type === 'tenant') {
+        const formData = new FormData();
+        formData.append('Name.first_name', data.firstName);
+        formData.append('Name.last_name', data.lastName);
+        formData.append('Phone_Number', data.phoneNumber);
+        formData.append('Email', data.email);
+        formData.append(
+          'I_adhere_to_Trident_Rentals_Terms_and_Conditions',
+          data.agree.toString()
+        );
+        const res = await onSubmitAction(formData, token);
+        if (res.message === 'Data Added Successfully') {
+          reset();
+          toast.success('Registered Successfully! 🎉');
+        } else {
+          toast.error(
+            'Please ensure all required fields are filled out correctly and try again.'
+          );
+        }
+      }
+    }
+  };
 
   return (
     <div className="p-5 border border-[#172540] rounded-[10px] flex flex-col gap-4 relative">
       <div className="grid grid-cols-2 gap-x-5">
-        <div>
+        <div className="relative">
           <label htmlFor="firstName" className="text-[14px] text-black">
             First Name
           </label>
@@ -50,7 +102,7 @@ export const RegisterForm = () => {
             </p>
           )}
         </div>
-        <div>
+        <div className="relative">
           <label htmlFor="lastName" className="text-[14px] text-black">
             Last Name
           </label>
@@ -67,7 +119,7 @@ export const RegisterForm = () => {
           )}
         </div>
       </div>
-      <div>
+      <div className="relative">
         <label htmlFor="email" className="text-[14px] text-black">
           Email
         </label>
@@ -83,7 +135,7 @@ export const RegisterForm = () => {
           </p>
         )}
       </div>
-      <div>
+      <div className="relative">
         <label htmlFor="email" className="text-[14px] text-black">
           Phone Number
         </label>
@@ -92,7 +144,7 @@ export const RegisterForm = () => {
           name="phoneNumber"
           render={({ field }) => (
             <PhoneInput
-              className="bg-white text-black rounded-md border border-input text-sm shadow-sm transition-colors"
+              className="bg-white text-black rounded-md text-sm shadow-sm transition-colors"
               onChange={field.onChange}
               onBlur={field.onBlur}
               value={field.value}
@@ -107,7 +159,7 @@ export const RegisterForm = () => {
       </div>
 
       <div className="items-center flex space-x-2 py-4">
-        <Checkbox id="terms1" />
+        <Checkbox id="terms1" onCheckedChange={handleAgreeClick} />
         <div className="grid gap-1.5 leading-none">
           <label
             htmlFor="terms1"
@@ -119,7 +171,12 @@ export const RegisterForm = () => {
         </div>
       </div>
 
-      <Button className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399] absolute -bottom-4 left-1/2 transform -translate-x-1/2 ">
+      <AwesomeCaptcha onValidate={handleCaptchaValidate} />
+
+      <Button
+        onClick={handleSubmit(onSubmit)}
+        className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399] absolute -bottom-4 left-1/2 transform -translate-x-1/2 "
+      >
         I’m Interested
       </Button>
     </div>
