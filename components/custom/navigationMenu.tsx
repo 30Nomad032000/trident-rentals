@@ -10,6 +10,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  NavigationMenuViewport,
 } from '@/components/ui/navigation-menu';
 
 const components: { title: string; href: string; description: string }[] = [
@@ -26,7 +27,7 @@ const components: { title: string; href: string; description: string }[] = [
   {
     title: 'Partner',
     href: '/register?q=partner',
-    description: 'Register as a Partner',
+    description: 'Grow Your Business ! Register as a Partner',
   },
   {
     title: 'Vendor',
@@ -43,7 +44,7 @@ export function NavigationMenuRegister() {
           <NavigationMenuTrigger className="font-semibold text-base text-[#393939]">
             Register As
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="">
             <ul className="grid w-[300px] gap-3 p-4 md:w-[400px] md:grid-cols-2 lg:w-[500px] ">
               {components.map((component) => (
                 <ListItem

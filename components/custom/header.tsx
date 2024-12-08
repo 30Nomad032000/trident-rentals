@@ -45,7 +45,7 @@ export const Header = () => {
             'lg:flex lg:flex-row lg:static lg:w-auto lg:bg-transparent lg:p-0'
           )}
         >
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-10 xs:gap-16 sm:gap-16 md:gap-16 font-semibold text-base text-[#393939]">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-10 font-semibold text-base text-[#393939]">
             <div
               className={cn(
                 pathName === '/'

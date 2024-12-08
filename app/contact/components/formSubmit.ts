@@ -11,7 +11,7 @@ export async function onSubmitAction(
   'use server';
   const formData = Object.fromEntries(data);
   const url =
-    'https://www.zohoapis.in/creator/v2.1/data/demo13cloudq/trident-data-demo/form/Contact_Us';
+    'https://www.zohoapis.com/creator/v2.1/data/tridentrental/trident-rental/form/Contact_Us';
 
   const payload = {
     data: formData,
@@ -26,10 +26,10 @@ export async function onSubmitAction(
       body: JSON.stringify(payload),
     });
     const res = await response.json();
+    console.log(res);
     return res;
   } catch (e: unknown) {
     const typedError = e as { message: string };
-    console.log(typedError?.message);
     return { message: typedError.message };
   }
 }

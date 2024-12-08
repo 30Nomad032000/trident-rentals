@@ -18,7 +18,6 @@ export async function onSubmitAction(
   };
 
   try {
-    console.log(formData);
     const response = await fetch(url, {
       headers: {
         Authorization: `Zoho-oauthtoken ${token}`,

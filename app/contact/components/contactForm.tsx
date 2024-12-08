@@ -20,9 +20,10 @@ export const contactSchema = z.object({
 
 interface ContactFormProps {
   token: string;
+  title?: boolean;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ token, title }) => {
   const {
     register,
     handleSubmit,
@@ -43,11 +44,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
 
   const onSubmit = async (data: z.output<typeof contactSchema>) => {
     const formData = new FormData();
-    formData.append('Name', data.firstName + ' ' + data.lastName);
-    formData.append('Phone_Number', data.phoneNumber);
-    formData.append('Email', data.email);
-    formData.append('State', data.state);
-    formData.append('More_Info', data.additionalText || '');
+    formData.append('Enter_your_Name', data.firstName + ' ' + data.lastName);
+    formData.append('Enter_your_Phone_Number', data.phoneNumber);
+    formData.append('Enter_your_Email_Address', data.email);
+    formData.append('Enter_your_City', data.state);
+    formData.append('How_can_we_help_you', data.additionalText || '');
     const res = await onSubmitAction(formData, token || '');
     if (res.message === 'Data Added Successfully') {
       reset();
@@ -66,8 +67,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token }) => {
       onSubmit={handleSubmit(onSubmit)}
       className="h-fit w-full lg:max-w-[590px] bg-gray-100 rounded-[20px] bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-5 flex flex-col gap-5 items-center border p-6 border-white font-medium"
     >
-      <div className="text-xl text-white font-medium">Contact Us</div>
-      <div className="grid grid-cols-2 gap-x-8 w-full ">
+      {title ? (
+        <div className="text-xl text-white font-medium">Contact Us</div>
+      ) : null}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4 w-full ">
         <div className="relative">
           <label htmlFor="firstName" className="text-[14px] text-white">
             First Name
