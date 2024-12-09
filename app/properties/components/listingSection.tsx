@@ -13,16 +13,18 @@ import {
 } from '@/components/ui/pagination';
 import { getImageUrl } from '@/lib/utils';
 import { Property } from '../types';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface ListingSectionProps {
-  data?: Property[]; // Replace 'any[]' with the appropriate type for your data
+  data?: Property[];
 }
 
 export default function ListingSection({ data }: ListingSectionProps) {
+  const router = useRouter();
+  const pathName = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 9; // Number of items per page
+  const pageSize = 9;
 
-  // Ensure data is defined; if not, show "No data available"
   const listings = data || [];
   const totalItems = listings.length;
   const totalPages = Math.ceil(totalItems / pageSize);
@@ -35,11 +37,16 @@ export default function ListingSection({ data }: ListingSectionProps) {
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      router.replace(pathName, { scroll: false });
     }
   };
 
   if (!listings || listings.length === 0) {
-    return <div>No data available</div>;
+    return (
+      <div className="h-screen flex justify-center items-center">
+        No data available
+      </div>
+    );
   }
 
   return (
@@ -61,7 +68,6 @@ export default function ListingSection({ data }: ListingSectionProps) {
         />
       ))}
 
-      {/* Pagination Control */}
       <div className="col-span-full flex justify-center py-4">
         <Pagination>
           <PaginationContent>

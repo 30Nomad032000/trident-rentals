@@ -39,6 +39,12 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({
   const [search, setSearch] = useState(searchQuery ?? '');
 
   useEffect(() => {
+    setBathrooms(bathroomsQuery);
+    setBedrooms(bedroomsQuery);
+    setSearch(searchQuery);
+  }, [bedroomsQuery, bathroomsQuery, searchQuery]);
+
+  useEffect(() => {
     if (propertyTypes.length > 1) {
       const queryString = propertyTypes.join(',');
       router.push(pathname + '?' + createQueryString('types', queryString), {
@@ -86,7 +92,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({
   };
 
   const handleClear = () => {
-    window.location.href = '/properties';
+    router.replace(pathname, { scroll: false });
     setBathrooms('1');
     setBedrooms('1');
     setPropertyTypes([]);
@@ -98,7 +104,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set(name, value);
-
       return params.toString();
     },
     [searchParams]
@@ -213,7 +218,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-7">
+        {/* <div className="flex flex-col gap-7">
           <div className="flex w-full items-center justify-center">
             <h3 className="text-sm font-semibold border border-[#898989] w-fit pl-3 pr-5 py-2 rounded-[30px]">
               Type
@@ -245,7 +250,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
