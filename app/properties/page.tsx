@@ -1,17 +1,11 @@
 import { Header } from '@/components/custom/header';
 import { CustomFontText } from '@/components/ui/customFontText';
-import ListingCard from './components/listingCard';
+import ListingSection from './components/listingSection'; // Import the new client component
 import PropertyFilter from './components/listingFilter';
 import { Footer } from '@/components/custom/footer';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination';
+import { Filter } from 'lucide-react';
+import ShimmerButton from '@/components/ui/shimmer-button';
+import PropertyModal from './components/listingPopup';
 import { getAccessToken } from '@/lib/zohoAuth';
 import type { ZohoData } from './types';
 import {
@@ -23,10 +17,6 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Filter } from 'lucide-react';
-import ShimmerButton from '@/components/ui/shimmer-button';
-import PropertyModal from './components/listingPopup';
-import { getImageUrl } from '@/lib/utils';
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | undefined } | undefined>;
@@ -42,6 +32,7 @@ export default async function Page({ searchParams }: PageProps) {
   const isOpen =
     resolvedSearchParams?.isOpen?.split(',')[0] === 'true' ? true : false;
   const item = resolvedSearchParams?.isOpen?.split(',')[1] ?? 0;
+
   const typeCriteria =
     types.length === 0
       ? ''
@@ -50,12 +41,15 @@ export default async function Page({ searchParams }: PageProps) {
           .filter((item) => item.trim() !== '')
           .map((item) => `Type_field == "${item}"`)
           .join(' || ');
+
   const rentCriteria = `&& Rent_Amount >= ${
     rent.split(',')[0]
   } && Rent_Amount <= ${rent.split(',')[1]}`;
+
   const criteria = `(Number_Of_Bathrooms >= ${bathrooms} && Number_Of_Bedrooms >= ${bedrooms} && Property_Name.contains("${search}") ${
     types.length !== 0 ? '&& ' : ''
   } ${typeCriteria} ${rentCriteria})`;
+
   const token = await getAccessToken();
   const encodedCriteria = encodeURIComponent(criteria);
   const result = await fetchPropertyData(token, encodedCriteria);
@@ -116,57 +110,12 @@ export default async function Page({ searchParams }: PageProps) {
               rentQuery={rent}
             />
           </div>
-          <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-x-1 sm:gap-x-2 md:gap-x-2 lg:gap-x-4 xl:gap-x-10 gap-y-8">
-            {result === undefined || result?.data === undefined ? (
-              <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-3 flex justify-center items-center">
-                No data available
-              </div>
-            ) : (
-              result.data.map((item, index) => (
-                <ListingCard
-                  image={getImageUrl(
-                    item.Property_Image1[0].ID,
-                    item.Property_Image1[0].Upload_your_Image_here
-                  )}
-                  index={index}
-                  space={item.Property_Size}
-                  name={item.Property_Name}
-                  bedrooms={item.Number_Of_Bedrooms}
-                  bathrooms={item.Number_Of_Bathrooms}
-                  address={item.Property_Address.zc_display_value}
-                  price={item.Rent_Amount}
-                  key={index}
-                />
-              ))
-            )}
+          <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-3">
+            <ListingSection data={result?.data} />
           </div>
         </div>
 
         <PropertyModal isOpen={isOpen} property={propertyData} />
-
-        <div className="py-4">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
       </div>
       <Footer />
     </>
