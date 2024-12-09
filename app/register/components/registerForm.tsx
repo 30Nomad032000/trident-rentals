@@ -14,7 +14,8 @@ import {
   LoadCanvasTemplate,
   validateCaptcha,
 } from 'react-simple-captcha';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 export const registerSchema = z
   .object({
@@ -29,6 +30,7 @@ export const registerSchema = z
   })
   .superRefine(({ type, companyName }, refinementContext) => {
     if (type === 'vendor' && companyName.length < 1) {
+      console.log(companyName);
       return refinementContext.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Company Name is required',
@@ -38,7 +40,7 @@ export const registerSchema = z
   });
 
 interface RegisterationFormProps {
-  type: string;
+  type: 'vendor' | 'tenant' | 'partner' | 'landlord';
   token: string;
 }
 
@@ -67,6 +69,8 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -75,12 +79,14 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
     setValue('agree', bool);
   };
 
-  const onSubmit = async (data: z.output<typeof registerSchema>) => {
-    if (!validateCaptcha(data.captcha)) {
-      toast.error('Verification Failed, Please try again!!!');
-    } else {
-      if (type === 'tenant') {
-        const formData = new FormData();
+  const generateFormData = (
+    type: 'vendor' | 'tenant' | 'partner' | 'landlord',
+    data: z.output<typeof registerSchema>
+  ): FormData => {
+    const formData = new FormData();
+
+    switch (type) {
+      case 'tenant':
         formData.append(
           'Name',
           `{"first_name":"${data.firstName}","last_name":"${data.lastName}","status":"add"}`
@@ -91,16 +97,59 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
           'I_adhere_to_Trident_Rentals_Terms_and_Conditions',
           data.agree.toString()
         );
-        const res = await onSubmitAction(formData, token);
-        console.log(res);
-        if (res.message === 'Data Added Successfully') {
-          reset();
-          toast.success('Registered Successfully! 🎉');
-        } else {
-          toast.error(
-            'Please ensure all required fields are filled out correctly and try again.'
-          );
-        }
+        break;
+
+      case 'partner':
+        formData.append(
+          'Name1',
+          `{"first_name":"${data.firstName}","last_name":"${data.lastName}","status":"add"}`
+        );
+        formData.append('Phone_Number', data.phoneNumber);
+        formData.append('Email', data.email);
+        formData.append(
+          'I_read_and_agreed_terms_and_conditions',
+          data.agree.toString()
+        );
+        break;
+
+      case 'vendor':
+        formData.append('Company_Name', data.companyName);
+        formData.append(
+          'Business_Owner',
+          `{"first_name":"${data.firstName}","last_name":"${data.lastName}","status":"add"}`
+        );
+        formData.append('Mobile_Number1', data.phoneNumber);
+        formData.append('Email', data.email);
+        formData.append(
+          'I_have_read_and_agreed_the_terms_and_conditions',
+          data.agree.toString()
+        );
+        break;
+
+      default:
+        throw new Error(`Unsupported type: ${type}`);
+    }
+
+    return formData;
+  };
+
+  const onSubmit = async (data: z.output<typeof registerSchema>) => {
+    setLoading(true);
+    if (!validateCaptcha(data.captcha)) {
+      setLoading(false);
+      toast.error('Verification Failed, Please try again!!!');
+    } else {
+      const formData = generateFormData(type, data);
+      const res = await onSubmitAction(formData, token, type);
+      if (res.message === 'Data Added Successfully') {
+        reset();
+        setLoading(false);
+        toast.success('Registered Successfully! 🎉');
+      } else {
+        setLoading(false);
+        toast.error(
+          'Please ensure all required fields are filled out correctly and try again.'
+        );
       }
     }
   };
@@ -109,14 +158,14 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
     <div className="p-5 border border-[#172540] rounded-[10px] flex flex-col gap-6 relative">
       {type === 'vendor' ? (
         <div className="relative">
-          <label htmlFor="firstName" className="text-[14px] text-black">
+          <label htmlFor="companyName" className="text-[14px] text-black">
             Company Name
           </label>
           <Input
             type="text"
             id="companyName"
             className="bg-white text-black"
-            {...register('firstName')}
+            {...register('companyName')}
           />
           {errors.companyName?.message && (
             <p className="text-xs text-red-500 absolute -bottom-5">
@@ -232,10 +281,11 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
       </div>
 
       <Button
+        disabled={loading}
         onClick={handleSubmit(onSubmit)}
         className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399] absolute -bottom-4 left-1/2 transform -translate-x-1/2 "
       >
-        I’m Interested
+        {loading ? <Loader2 className="animate-spin" /> : 'I’m Interested'}
       </Button>
     </div>
   );

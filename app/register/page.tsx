@@ -13,7 +13,11 @@ interface PageProps {
 
 export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
-  const q = resolvedSearchParams?.q;
+  const q = resolvedSearchParams?.q as
+    | 'vendor'
+    | 'tenant'
+    | 'partner'
+    | 'landlord';
   const token = await getAccessToken();
   return (
     <>
