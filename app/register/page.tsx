@@ -6,6 +6,7 @@ import { CustomFontText } from '@/components/ui/customFontText';
 import Image from 'next/image';
 import { RegisterForm } from './components/registerForm';
 import { getAccessToken } from '@/lib/zohoAuth';
+import { LandLordForm } from './components/landLordForm';
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | undefined } | undefined>;
@@ -46,7 +47,11 @@ export default async function Page({ searchParams }: PageProps) {
           <div className="text-[#172540] text-2xl font-semibold flex justify-center pb-3">
             Register as a&nbsp;<span className="capitalize">{q}</span>
           </div>
-          <RegisterForm type={q || ''} token={token} />
+          {q === 'landlord' ? (
+            <LandLordForm token={token} />
+          ) : (
+            <RegisterForm type={q || ''} token={token} />
+          )}
         </div>
       </div>
       <Footer />
