@@ -5,7 +5,6 @@ import { Search, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -74,13 +73,13 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({
     setSearch(value);
   };
 
-  const handleTypes = (checked: boolean, type: string) => {
-    const updatedPropertyTypes = checked
-      ? [...propertyTypes, type]
-      : propertyTypes.filter((t) => t !== type);
+  // const handleTypes = (checked: boolean, type: string) => {
+  //   const updatedPropertyTypes = checked
+  //     ? [...propertyTypes, type]
+  //     : propertyTypes.filter((t) => t !== type);
 
-    setPropertyTypes(updatedPropertyTypes);
-  };
+  //   setPropertyTypes(updatedPropertyTypes);
+  // };
 
   const handleRent = (value: number[]) => {
     const newValue = value;

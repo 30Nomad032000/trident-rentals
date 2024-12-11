@@ -30,7 +30,6 @@ export const registerSchema = z
   })
   .superRefine(({ type, companyName }, refinementContext) => {
     if (type === 'vendor' && companyName.length < 1) {
-      console.log(companyName);
       return refinementContext.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Company Name is required',
