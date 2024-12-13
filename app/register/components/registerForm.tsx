@@ -232,6 +232,7 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
           name="phoneNumber"
           render={({ field }) => (
             <PhoneInput
+              defaultCountry="US"
               className="bg-white text-black rounded-md text-sm shadow-sm transition-colors"
               onChange={field.onChange}
               onBlur={field.onBlur}

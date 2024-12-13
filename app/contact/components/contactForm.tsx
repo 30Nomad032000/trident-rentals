@@ -37,7 +37,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token, title }) => {
       lastName: '',
       email: '',
       phoneNumber: '',
-      state: '',
+      state: 'Georgia',
       additionalText: '',
     },
   });
@@ -129,6 +129,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token, title }) => {
           name="phoneNumber"
           render={({ field }) => (
             <PhoneInput
+              defaultCountry="US"
               className="bg-transparent border-white"
               onChange={field.onChange}
               onBlur={field.onBlur}

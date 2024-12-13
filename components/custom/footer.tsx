@@ -9,13 +9,15 @@ export const Footer = () => {
       <div className="container mx-auto py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-6 gap-y-8 lg:gap-y-0 border-b border-white">
         {/* Logo and description */}
         <div className="col-span-1 lg:col-span-2 flex flex-col gap-6 xl:col-span-3">
-          <Image
-            src="/footerLogo.svg"
-            alt="logo"
-            width={136}
-            height={32}
-            className="w-[100px] lg:w-[136px] h-8"
-          />
+          <Link href={'/'}>
+            <Image
+              src="/footerLogo.svg"
+              alt="logo"
+              width={136}
+              height={32}
+              className="w-[100px] lg:w-[136px] h-8"
+            />
+          </Link>
           <div className="text-white text-xs md:text-sm  font-normal max-w-[600px] pr-6">
             At Trident Property Management, we are revolutionizing the world of
             property management through the seamless integration of cutting-edge

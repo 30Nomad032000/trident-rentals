@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button } from '../ui/button';
 
 export const Contact = () => {
@@ -11,7 +12,7 @@ export const Contact = () => {
         by combining innovation with affordability.
       </p>
       <Button className="bg-[#00CCFF] hover:bg-[#00CCFF] text-white border-none px-[30px] py-[10px] text-base hover:text-white font-normal">
-        Contact Us
+        <Link href="contact">Contact Us</Link>
       </Button>
     </div>
   );

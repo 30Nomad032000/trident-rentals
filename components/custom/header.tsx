@@ -21,13 +21,15 @@ export const Header = () => {
       )}
     >
       <div className="container mx-auto flex justify-between items-center h-[100px] px-4">
-        <Image
-          src="/tridentLogo.svg"
-          className="w-[200px] h-[45px]"
-          width={100}
-          height={100}
-          alt="Trident Rentals Logo"
-        />
+        <Link href="/">
+          <Image
+            src="/tridentLogo.svg"
+            className="w-[200px] h-[45px] cursor-pointer"
+            width={100}
+            height={100}
+            alt="Trident Rentals Logo"
+          />
+        </Link>
         <div className="lg:hidden">
           <button
             className="text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border"

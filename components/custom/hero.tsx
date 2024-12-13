@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button } from '../ui/button';
 import { CustomFontText } from '../ui/customFontText';
 import Image from 'next/image';
@@ -26,7 +27,7 @@ export const Hero = () => {
           variant="outline"
           className="px-[30px] py-[10px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base"
         >
-          Know More
+          <Link href="/contact">Know More</Link>
         </Button>
       </div>
       <div className="col-span-1 md:col-span-1  lg:col-span-2 xl:col-span-2 relative flex items-end">
