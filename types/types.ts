@@ -27,3 +27,22 @@ export type Property = {
   Property_Name: string; // Name of the property
   Property_Address: PropertyAddress; // Address object for the property
 };
+
+interface Name1Object {
+  prefix: string;
+  last_name: string;
+  suffix: string;
+  first_name: string;
+  zc_display_value: string;
+}
+
+type PaymentStatus = 'Unpaid' | 'Paid' | 'Pending'; // Adjust if needed
+
+export interface PartnerInfo {
+  Partner_Type: string;
+  Email: string;
+  Phone_Number: string;
+  ID: string;
+  Payment_Done: PaymentStatus;
+  Name1: Name1Object;
+}

@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
@@ -113,17 +112,17 @@ export const ListingCard: React.FC<ListingCardProps> = ({
       <CardFooter className="p-2 pt-0">
         <div className="flex w-full gap-[18px] justify-between">
           <div className="text-2xl font-bold text-nowrap">$ {price}</div>{' '}
-          <Link
-            href="https://tridentrentalllc.zohocreatorportal.com/"
-            target="_blank"
+          <Button
+            variant="outline"
+            className="px-[15px] py-[6px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              router.push('/register?q=tenant');
+            }}
           >
-            <Button
-              variant="outline"
-              className="px-[15px] py-[6px] text-[#003399] border-[#003399] hover:text-[#003399] flex gap-3 font-normal text-base"
-            >
-              I&apos;m Interested
-            </Button>
-          </Link>
+            I&apos;m Interested
+          </Button>
         </div>
       </CardFooter>
     </Card>

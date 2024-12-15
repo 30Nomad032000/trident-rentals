@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
+import ZSiqChat from '@/components/custom/ZSiqChat';
 
 export const metadata: Metadata = {
   title: 'Trident Rentals',
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         <Toaster position="top-right" />
         {children}
+        <ZSiqChat />
       </body>
     </html>
   );

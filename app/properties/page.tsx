@@ -7,7 +7,7 @@ import { Filter } from 'lucide-react';
 import ShimmerButton from '@/components/ui/shimmer-button';
 import PropertyModal from './components/listingPopup';
 import { getAccessToken } from '@/lib/zohoAuth';
-import type { ZohoData } from './types';
+import type { ZohoData } from '../../types/types';
 import {
   Drawer,
   DrawerContent,

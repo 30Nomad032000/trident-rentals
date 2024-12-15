@@ -16,6 +16,7 @@ import {
 } from 'react-simple-captcha';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
 
 export const registerSchema = z
   .object({
@@ -232,8 +233,9 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
           name="phoneNumber"
           render={({ field }) => (
             <PhoneInput
+              dark
               defaultCountry="US"
-              className="bg-white text-black rounded-md text-sm shadow-sm transition-colors"
+              className="bg-white text-black shadow-sm"
               onChange={field.onChange}
               onBlur={field.onBlur}
               value={field.value}
@@ -255,7 +257,11 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
             className="text-base font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             I have read and agreed to the
-            <span className="text-[#003399]"> Terms and Conditions*</span>
+            <span className="text-[#003399] ml-1 hover:font-medium">
+              <Link href="https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Landlord_Terms_Conditions/27tKXB2RSOwAXWWDEBpud0EOJUEv9ANhbm4GDxUR4fe2yvTKmgX54C1RXr1zfMbzQ160ybqyv0Jv2r1N0H1Vt3WaXy5YtQyMsaAM">
+                Terms and Conditions*
+              </Link>
+            </span>
           </label>
         </div>
       </div>

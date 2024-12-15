@@ -26,18 +26,19 @@ type PhoneInputProps = Omit<
 > &
   Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange'> & {
     onChange?: (value: RPNInput.Value) => void;
+    dark?: boolean;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, ...props }, ref) => {
+    ({ className, onChange, dark, ...props }, ref) => {
       return (
         <RPNInput.default
           ref={ref}
           className={cn('flex', className)}
           flagComponent={FlagComponent}
-          countrySelectComponent={CountrySelect}
-          inputComponent={InputComponent}
+          countrySelectComponent={dark ? DarkCountrySelect : LightCountrySelect}
+          inputComponent={dark ? DarkInputComponent : LightInputComponent}
           /**
            * Handles the onChange event.
            *
@@ -59,16 +60,28 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   );
 PhoneInput.displayName = 'PhoneInput';
 
-const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
+const DarkInputComponent = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => (
     <Input
-      className={cn('rounded-e-lg rounded-s-none ', className)}
+      className={cn('rounded-e-lg rounded-s-none border-input ', className)}
       {...props}
       ref={ref}
     />
   )
 );
-InputComponent.displayName = 'InputComponent';
+
+const LightInputComponent = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...props }, ref) => (
+    <Input
+      className={cn('rounded-e-lg rounded-s-none border-white ', className)}
+      {...props}
+      ref={ref}
+    />
+  )
+);
+
+LightInputComponent.displayName = 'InputComponent';
+DarkInputComponent.displayName = 'InputComponent';
 
 type CountrySelectOption = { label: string; value: RPNInput.Country };
 
@@ -79,7 +92,7 @@ type CountrySelectProps = {
   options: CountrySelectOption[];
 };
 
-const CountrySelect = ({
+const LightCountrySelect = ({
   disabled,
   value,
   onChange,
@@ -99,7 +112,82 @@ const CountrySelect = ({
           type="button"
           variant={'outline'}
           className={cn(
-            'flex gap-1 rounded-e-none rounded-s-lg bg-transparent hover:bg-transparent h-11 border-input px-3'
+            'flex gap-1 rounded-e-none rounded-s-lg bg-transparent hover:bg-transparent h-11 px-3 dark:border-input border-white'
+          )}
+          disabled={disabled}
+        >
+          <FlagComponent country={value} countryName={value} />
+          <ChevronsUpDown
+            className={cn(
+              '-mr-2 h-4 w-4 opacity-50',
+              disabled ? 'hidden' : 'opacity-100'
+            )}
+          />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[300px] p-0">
+        <Command>
+          <CommandList>
+            <ScrollArea className="h-72">
+              <CommandInput placeholder="Search country..." />
+              <CommandEmpty>No country found.</CommandEmpty>
+              <CommandGroup>
+                {options
+                  .filter((x) => x.value)
+                  .map((option) => (
+                    <CommandItem
+                      className="gap-2"
+                      key={option.value}
+                      onSelect={() => handleSelect(option.value)}
+                    >
+                      <FlagComponent
+                        country={option.value}
+                        countryName={option.label}
+                      />
+                      <span className="flex-1 text-sm">{option.label}</span>
+                      {option.value && (
+                        <span className="text-foreground/50 text-sm">
+                          {`+${RPNInput.getCountryCallingCode(option.value)}`}
+                        </span>
+                      )}
+                      <CheckIcon
+                        className={cn(
+                          'ml-auto h-4 w-4',
+                          option.value === value ? 'opacity-100' : 'opacity-0'
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            </ScrollArea>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const DarkCountrySelect = ({
+  disabled,
+  value,
+  onChange,
+  options,
+}: CountrySelectProps) => {
+  const handleSelect = React.useCallback(
+    (country: RPNInput.Country) => {
+      onChange(country);
+    },
+    [onChange]
+  );
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          type="button"
+          variant={'outline'}
+          className={cn(
+            'flex gap-1 rounded-e-none rounded-s-lg bg-transparent hover:bg-transparent h-11 px-3 dark:border-input border-input'
           )}
           disabled={disabled}
         >

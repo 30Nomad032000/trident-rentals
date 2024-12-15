@@ -12,7 +12,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { getImageUrl } from '@/lib/utils';
-import { Property } from '../types';
+import { Property } from '../../../types/types';
 import { usePathname, useRouter } from 'next/navigation';
 
 interface ListingSectionProps {

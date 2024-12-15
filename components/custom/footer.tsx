@@ -59,9 +59,9 @@ export const Footer = () => {
                 className="w-5 h-5"
               />
               <span className="text-sm md:text-base">
-                <a href="tel:678 983 2042" type="tel">
+                <Link href="tel:678 983 2042" type="tel">
                   678 983 2042
-                </a>
+                </Link>
               </span>
             </div>
             <div className="flex gap-3 md:gap-4 items-center">
@@ -73,7 +73,9 @@ export const Footer = () => {
                 className="w-5 h-5"
               />
               <span className="text-sm md:text-base">
-                <a href="mailto:info@tridentrent.com">info@tridentrent.com</a>
+                <Link href="mailto:info@tridentrent.com">
+                  info@tridentrent.com
+                </Link>
               </span>
             </div>
             <div className="flex gap-3 md:gap-4 items-center">
@@ -84,13 +86,13 @@ export const Footer = () => {
                 height={24}
                 className="w-5 h-5"
               />
-              <span className="text-sm md:text-base">
-                <a
+              <span className="text-sm md:text-base text-nowrap">
+                <Link
                   href="https://maps.app.goo.gl/bvoZQpCQ5qazU57SA"
                   target="_blank"
                 >
                   6110 McFarland Station Drive, Suite #904
-                </a>
+                </Link>
               </span>
             </div>
           </div>

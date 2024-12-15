@@ -65,7 +65,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ token, title }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="h-fit w-full lg:max-w-[590px] bg-gray-100 rounded-[20px] bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-5 flex flex-col gap-5 items-center border p-6 border-white font-medium"
+      className="h-fit w-full lg:max-w-[590px] bg-gray-100 rounded-[20px] bg-clip-padding backdrop-filter backdrop-blur-[400px] bg-opacity-5 flex flex-col gap-5 items-center border p-6 border-white font-medium"
     >
       {title ? (
         <div className="text-xl text-white font-medium">Contact Us</div>

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { RegisterForm } from './components/registerForm';
 import { getAccessToken } from '@/lib/zohoAuth';
 import { LandLordForm } from './components/landLordForm';
+import { PartnerInfo } from '../../types/types';
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | undefined } | undefined>;
@@ -20,6 +21,7 @@ export default async function Page({ searchParams }: PageProps) {
     | 'partner'
     | 'landlord';
   const token = await getAccessToken();
+  const result = await fetchPartnerData(token);
   return (
     <>
       <Header />
@@ -48,7 +50,7 @@ export default async function Page({ searchParams }: PageProps) {
             Register as a&nbsp;<span className="capitalize">{q}</span>
           </div>
           {q === 'landlord' ? (
-            <LandLordForm token={token} />
+            <LandLordForm token={token} partnerData={result?.data} />
           ) : (
             <RegisterForm type={q || ''} token={token} />
           )}
@@ -57,4 +59,34 @@ export default async function Page({ searchParams }: PageProps) {
       <Footer />
     </>
   );
+}
+
+async function fetchPartnerData(
+  token: string
+): Promise<{ code: number; data: PartnerInfo[] | undefined } | null> {
+  try {
+    const response = await fetch(
+      'https://www.zohoapis.com/creator/v2.1/data/tridentrental/trident-rental/report/All_Partner_Registrations',
+      {
+        headers: {
+          Authorization: `Zoho-oauthtoken ${token}`,
+        },
+        method: 'GET',
+      }
+    );
+
+    const responseBody = await response.text();
+
+    if (!response.ok) {
+      console.log('Error Response:', responseBody);
+      return null;
+    }
+    const parsedData: { code: number; data: PartnerInfo[] | undefined } | null =
+      JSON.parse(responseBody);
+    return parsedData;
+  } catch (error: unknown) {
+    const typedError = error as { message: string };
+    console.log('Error fetching property data:', typedError.message);
+    return null;
+  }
 }

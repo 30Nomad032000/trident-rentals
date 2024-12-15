@@ -18,6 +18,15 @@ import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@radix-ui/react-label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import Link from 'next/link';
+import { PartnerInfo } from '@/types/types';
 
 export const registerSchema = z
   .object({
@@ -30,6 +39,8 @@ export const registerSchema = z
     phoneNumber: z.string().min(1, { message: 'Phone Number is required' }),
     agree: z.boolean(),
     captcha: z.string().min(1, { message: 'Captcha is required' }),
+    referred: z.string(),
+    partnerInfo: z.string().optional(),
   })
   .superRefine(
     ({ registerdAs, firstName, lastName, companyName }, refinementContext) => {
@@ -60,9 +71,13 @@ export const registerSchema = z
 
 interface LandLordFormProps {
   token: string;
+  partnerData: PartnerInfo[] | undefined;
 }
 
-export const LandLordForm: React.FC<LandLordFormProps> = ({ token }) => {
+export const LandLordForm: React.FC<LandLordFormProps> = ({
+  token,
+  partnerData,
+}) => {
   const {
     register,
     formState: { errors },
@@ -83,10 +98,15 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({ token }) => {
       phoneNumber: '',
       agree: false,
       captcha: '',
+      referred: 'No',
     },
   });
 
   const [loading, setLoading] = useState(false);
+
+  const filteredPartnerData = partnerData?.filter(
+    (item) => item.Payment_Done === 'Paid'
+  );
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -100,17 +120,19 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({ token }) => {
     data: z.output<typeof registerSchema>
   ): FormData => {
     const formData = new FormData();
-
-    formData.append(
-      'Name',
-      `{"first_name":"${data.firstName}","last_name":"${data.lastName}","status":"add"}`
-    );
+    if (data.firstName && data.lastName) {
+      formData.append(
+        'Name1',
+        `{"first_name":"${data.firstName}","last_name":"${data.lastName}","status":"add"}`
+      );
+    }
+    if (data.companyName.length !== 0) {
+      formData.append('Name', data.companyName);
+    }
+    formData.append('Have_you_been_referred_by_Partner', data.referred);
     formData.append('Phone_Number', data.phoneNumber);
     formData.append('Email', data.email);
-    formData.append(
-      'I_adhere_to_Trident_Rentals_Terms_and_Conditions',
-      data.agree.toString()
-    );
+    formData.append('I_agreed_the_terms_condition', data.agree.toString());
 
     return formData;
   };
@@ -140,7 +162,16 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({ token }) => {
     setValue('registerdAs', value);
   };
 
+  const handleRefererChange = (value: string) => {
+    setValue('referred', value);
+  };
+
+  const handlePartnerChange = (value: string) => {
+    setValue('partnerInfo', value);
+  };
+
   const registerdAs = watch('registerdAs');
+  const referred = watch('referred');
 
   return (
     <div className="p-5 border border-[#172540] rounded-[10px] flex flex-col gap-6 relative">
@@ -244,7 +275,9 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({ token }) => {
           name="phoneNumber"
           render={({ field }) => (
             <PhoneInput
-              className="bg-white text-black rounded-md text-sm shadow-sm transition-colors"
+              dark
+              defaultCountry="US"
+              className="bg-white text-black shadow-sm"
               onChange={field.onChange}
               onBlur={field.onBlur}
               value={field.value}
@@ -266,10 +299,57 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({ token }) => {
             className="text-base font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             I have read and agreed to the
-            <span className="text-[#003399]"> Terms and Conditions*</span>
+            <span className="text-[#003399] ml-1 hover:font-medium">
+              <Link href="https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Landlord_Terms_Conditions/27tKXB2RSOwAXWWDEBpud0EOJUEv9ANhbm4GDxUR4fe2yvTKmgX54C1RXr1zfMbzQ160ybqyv0Jv2r1N0H1Vt3WaXy5YtQyMsaAM">
+                Terms and Conditions*
+              </Link>
+            </span>
           </label>
         </div>
       </div>
+      <div className="flex flex-col gap-5">
+        <Label>Have you been referred by partner?</Label>
+        <RadioGroup
+          className="dark flex flex-row gap-x-5"
+          defaultValue="No"
+          onValueChange={handleRefererChange}
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem className="dark" value="Yes" id="Yes" />
+            <Label htmlFor="Yes" className="text-[14px] text-black">
+              Yes
+            </Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem className="dark" value="No" id="No" />
+            <Label htmlFor="No" className="text-[14px] text-black">
+              No
+            </Label>
+          </div>
+        </RadioGroup>
+      </div>
+
+      {referred === 'Yes' ? (
+        <div className="w-1/2">
+          <Select onValueChange={handlePartnerChange}>
+            <SelectTrigger className="w-[240px] h-11">
+              <SelectValue placeholder="-Select-" />
+            </SelectTrigger>
+            <SelectContent>
+              {filteredPartnerData?.length !== 0
+                ? filteredPartnerData?.map((item) => (
+                    <SelectItem
+                      value={item.Name1.zc_display_value}
+                      key={item.ID}
+                    >
+                      {item.Name1.zc_display_value}
+                    </SelectItem>
+                  ))
+                : null}
+            </SelectContent>
+          </Select>
+        </div>
+      ) : null}
 
       <div className="grid grid-cols-2 gap-x-5 pb-5">
         <div className="relative">

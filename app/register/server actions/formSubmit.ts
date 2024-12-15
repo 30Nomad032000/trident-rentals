@@ -41,7 +41,6 @@ export async function onSubmitAction(
       body: JSON.stringify(payload),
     });
     const res = await response.json();
-    console.log(res);
     return res;
   } catch (e: unknown) {
     const typedError = e as { message: string };

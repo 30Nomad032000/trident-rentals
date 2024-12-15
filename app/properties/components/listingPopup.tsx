@@ -14,9 +14,10 @@ import {
 } from '@/components/ui/carousel';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import type { Property } from '../types';
+import type { Property } from '../../../types/types';
 import { getImageUrl } from '@/lib/utils';
 import ImageViewer from 'react-simple-image-viewer';
+import Link from 'next/link';
 interface PropertyModalProps {
   isOpen?: boolean;
   property: Property | undefined;
@@ -89,7 +90,7 @@ export default function PropertyModal({
                   &nbsp;/ monthly
                 </div>
                 <Button className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399]">
-                  I’m Interested
+                  <Link href="/register?q=tenant">I’m Interested</Link>
                 </Button>
               </div>
               <div className="flex flex-col gap-y-7 px-4">
