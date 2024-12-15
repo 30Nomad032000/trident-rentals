@@ -73,7 +73,7 @@ export default function PropertyModal({
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className="px-12 py-12 md:max-w-6xl h-[70vh] bg-gray-100"
+          className="px-12 py-12 md:max-w-6xl h-[65vh] bg-gray-100"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-8 overflow-y-auto overflow-x-hidden">
             <div className="lg:pr-6 lg:border-r h-full">
