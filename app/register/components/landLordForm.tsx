@@ -300,7 +300,10 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({
           >
             I have read and agreed to the
             <span className="text-[#003399] ml-1 hover:font-medium">
-              <Link href="https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Landlord_Terms_Conditions/27tKXB2RSOwAXWWDEBpud0EOJUEv9ANhbm4GDxUR4fe2yvTKmgX54C1RXr1zfMbzQ160ybqyv0Jv2r1N0H1Vt3WaXy5YtQyMsaAM">
+              <Link
+                href="https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Landlord_Terms_Conditions/27tKXB2RSOwAXWWDEBpud0EOJUEv9ANhbm4GDxUR4fe2yvTKmgX54C1RXr1zfMbzQ160ybqyv0Jv2r1N0H1Vt3WaXy5YtQyMsaAM"
+                target="_blank"
+              >
                 Terms and Conditions*
               </Link>
             </span>
