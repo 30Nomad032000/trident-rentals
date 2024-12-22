@@ -128,7 +128,7 @@ async function fetchPropertyData(
 ): Promise<ZohoData | null> {
   try {
     const response = await fetch(
-      `https://www.zohoapis.com/creator/v2.1/data/tridentrental/trident-rental/report/All_Properties?criteria=${encodedCriteria}`,
+      `https://www.zohoapis.com/creator/v2.1/data/tridentrental/trident-rental/report/All_Property_Reports?criteria=${encodedCriteria}`,
       {
         headers: {
           Authorization: `Zoho-oauthtoken ${token}`,
@@ -145,6 +145,7 @@ async function fetchPropertyData(
     }
 
     const parsedData: ZohoData = JSON.parse(responseBody);
+
     return parsedData;
   } catch (error: unknown) {
     console.log(error);

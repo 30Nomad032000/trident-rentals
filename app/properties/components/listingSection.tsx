@@ -44,7 +44,7 @@ export default function ListingSection({ data }: ListingSectionProps) {
   if (!listings || listings.length === 0) {
     return (
       <div className="h-screen flex justify-center items-center">
-        No data available
+        No property found
       </div>
     );
   }
@@ -62,7 +62,7 @@ export default function ListingSection({ data }: ListingSectionProps) {
           name={item.Property_Name}
           bedrooms={item.Number_Of_Bedrooms}
           bathrooms={item.Number_Of_Bathrooms}
-          address={item.Property_Address.zc_display_value}
+          address={item.Property_Address?.zc_display_value}
           price={item.Rent_Amount}
           key={index}
         />

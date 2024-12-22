@@ -118,7 +118,10 @@ export const ListingCard: React.FC<ListingCardProps> = ({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              router.push('/register?q=tenant');
+              window.open(
+                'https://tridentrentalllc.zohocreatorportal.com/',
+                '_blank'
+              );
             }}
           >
             I&apos;m Interested

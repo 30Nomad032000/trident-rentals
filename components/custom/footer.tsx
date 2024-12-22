@@ -86,7 +86,7 @@ export const Footer = () => {
                 height={24}
                 className="w-5 h-5"
               />
-              <span className="text-sm md:text-base text-nowrap">
+              <span className="text-sm md:text-base ">
                 <Link
                   href="https://maps.app.goo.gl/bvoZQpCQ5qazU57SA"
                   target="_blank"

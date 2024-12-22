@@ -44,6 +44,17 @@ interface RegisterationFormProps {
   token: string;
 }
 
+const URL = {
+  vendor:
+    'https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Vendor_Terms_Conditions/nBFwyZvEM6F5885eMPdwgEdAhX8qge8unwbWGrPzOFjvR3JfOm97t3b2BtsRp7jOXPDdawqjr7dCMNMTr3Y6fbm6sO0MD20U8x4y',
+  tenant:
+    'https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Tenant_Terms_Conditions/U7s71NmxCsp2YWMEz8jEh21gNh1aAV5fyEMzgYT0QAqBwnOEujORrmdwMBFyaSD16pt5mEu4rJKaSX2MTbhHerxjCjW8O3aGer5N',
+  partner:
+    'https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Tenant_Terms_Conditions/U7s71NmxCsp2YWMEz8jEh21gNh1aAV5fyEMzgYT0QAqBwnOEujORrmdwMBFyaSD16pt5mEu4rJKaSX2MTbhHerxjCjW8O3aGer5N',
+};
+
+type UrlKey = keyof typeof URL;
+
 export const RegisterForm: React.FC<RegisterationFormProps> = ({
   type,
   token,
@@ -258,10 +269,7 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
           >
             I have read and agreed to the
             <span className="text-[#003399] ml-1 hover:font-medium">
-              <Link
-                href="https://creatorapp.zohopublic.com/tridentrental/trident-rental/form-perma/Landlord_Terms_Conditions/27tKXB2RSOwAXWWDEBpud0EOJUEv9ANhbm4GDxUR4fe2yvTKmgX54C1RXr1zfMbzQ160ybqyv0Jv2r1N0H1Vt3WaXy5YtQyMsaAM"
-                target="_blank"
-              >
+              <Link href={URL[type as UrlKey]} target="_blank">
                 Terms and Conditions*
               </Link>
             </span>

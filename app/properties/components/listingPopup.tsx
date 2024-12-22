@@ -91,7 +91,12 @@ export default function PropertyModal({
                   &nbsp;/ monthly
                 </div>
                 <Button className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399]">
-                  <Link href="/register?q=tenant">I’m Interested</Link>
+                  <Link
+                    href="https://tridentrentalllc.zohocreatorportal.com/"
+                    target="_blank"
+                  >
+                    I’m Interested
+                  </Link>
                 </Button>
               </div>
               <div className="flex flex-col gap-y-7 px-4">
