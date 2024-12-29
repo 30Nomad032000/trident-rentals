@@ -29,18 +29,22 @@ export default function ListingSection({ data }: ListingSectionProps) {
   const totalItems = listings.length;
   const totalPages = Math.ceil(totalItems / pageSize);
 
+  // Get the subset of listings for the current page
   const paginatedData = listings.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+    (currentPage - 1) * pageSize, // Start index
+    currentPage * pageSize // End index
   );
 
+  // Handle page changes in pagination
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-      router.replace(pathName, { scroll: false });
+      // Ensure the page number is within valid range
+      setCurrentPage(page); // Update the current page state
+      router.replace(pathName, { scroll: false }); // Update the URL without scrolling
     }
   };
 
+  // Render a message if no listings are available
   if (!listings || listings.length === 0) {
     return (
       <div className="h-screen flex justify-center items-center">

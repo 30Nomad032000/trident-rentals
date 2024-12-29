@@ -104,31 +104,40 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({
 
   const [loading, setLoading] = useState(false);
 
+  // Filter partnerData to include only entries where payment is completed
   const filteredPartnerData = partnerData?.filter(
     (item) => item.Payment_Done === 'Paid'
   );
 
   useEffect(() => {
-    loadCaptchaEnginge(6);
+    loadCaptchaEnginge(6); // Initialize captcha engine with 6 characters
   }, []);
 
+  // Handle agreement checkbox click
   const handleAgreeClick = (bool: boolean) => {
-    setValue('agree', bool);
+    setValue('agree', bool); // Update 'agree' field in the form
   };
 
+  // Generate FormData from form input
   const generateFormData = (
     data: z.output<typeof registerSchema>
   ): FormData => {
     const formData = new FormData();
+
+    // Append name fields if available
     if (data.firstName && data.lastName) {
       formData.append(
         'Name1',
         `{"first_name":"${data.firstName}","last_name":"${data.lastName}","status":"add"}`
       );
     }
+
+    // Append company name if provided
     if (data.companyName.length !== 0) {
       formData.append('Name', data.companyName);
     }
+
+    // Append other required fields
     formData.append('Have_you_been_referred_by_Partner', data.referred);
     formData.append('Phone_Number', data.phoneNumber);
     formData.append('Email', data.email);
@@ -137,39 +146,47 @@ export const LandLordForm: React.FC<LandLordFormProps> = ({
     return formData;
   };
 
+  // Handle form submission
   const onSubmit = async (data: z.output<typeof registerSchema>) => {
-    setLoading(true);
+    setLoading(true); // Set loading state to true
+
     if (!validateCaptcha(data.captcha)) {
+      // Validate captcha
       setLoading(false);
-      toast.error('Verification Failed, Please try again!!!');
+      toast.error('Verification Failed, Please try again!!!'); // Show error if captcha fails
     } else {
-      const formData = generateFormData(data);
-      const res = await onSubmitAction(formData, token, 'landlord');
+      const formData = generateFormData(data); // Generate FormData
+      const res = await onSubmitAction(formData, token, 'landlord'); // Submit form data
+
       if (res.message === 'Data Added Successfully') {
-        reset();
+        reset(); // Reset form on success
         setLoading(false);
-        toast.success('Registered Successfully! 🎉');
+        toast.success('Registered Successfully! 🎉'); // Show success message
       } else {
         setLoading(false);
         toast.error(
           'Please ensure all required fields are filled out correctly and try again.'
-        );
+        ); // Show error message on failure
       }
     }
   };
 
+  // Handle changes to the 'registerdAs' field
   const handleRegisterAsChange = (value: string) => {
     setValue('registerdAs', value);
   };
 
+  // Handle changes to the 'referred' field
   const handleRefererChange = (value: string) => {
     setValue('referred', value);
   };
 
+  // Handle changes to the 'partnerInfo' field
   const handlePartnerChange = (value: string) => {
     setValue('partnerInfo', value);
   };
 
+  // Watch form fields for dynamic updates
   const registerdAs = watch('registerdAs');
   const referred = watch('referred');
 

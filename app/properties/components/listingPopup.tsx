@@ -34,27 +34,30 @@ export default function PropertyModal({
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const images = property?.Property_Image1;
 
+  // Handles closing by updating the 'isOpen' query parameter in the URL
   const handleClose = (value: boolean) => {
-    router.push(pathname + '?' + createQueryString('isOpen', `${value}`), {
+    router.push(`${pathname}?${createQueryString('isOpen', `${value}`)}`, {
       scroll: false,
     });
   };
 
+  // Creates or updates a query string parameter
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set(name, value);
-
       return params.toString();
     },
     [searchParams]
   );
 
+  // Opens the image viewer by setting the current image index and toggling the viewer state
   const openImageViewer = useCallback((index: number) => {
     setCurrentImage(index);
     setIsViewerOpen(true);
   }, []);
 
+  // Closes the image viewer by resetting the current image index and toggling the viewer state
   const closeImageViewer = () => {
     setCurrentImage(0);
     setIsViewerOpen(false);

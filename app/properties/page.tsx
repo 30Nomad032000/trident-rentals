@@ -33,28 +33,37 @@ export default async function Page({ searchParams }: PageProps) {
     resolvedSearchParams?.isOpen?.split(',')[0] === 'true' ? true : false;
   const item = resolvedSearchParams?.isOpen?.split(',')[1] ?? 0;
 
+  // Build the type criteria for filtering properties
   const typeCriteria =
     types.length === 0
-      ? ''
+      ? '' // No type filter applied if 'types' array is empty
       : types
-          .split(',')
-          .filter((item) => item.trim() !== '')
-          .map((item) => `Type_field == "${item}"`)
-          .join(' || ');
+          .split(',') // Split types string into an array
+          .filter((item) => item.trim() !== '') // Remove any empty strings
+          .map((item) => `Type_field == "${item}"`) // Create condition for each type
+          .join(' || '); // Combine conditions with OR operator
 
+  // Construct the rent criteria for filtering properties within the rent range
   const rentCriteria = `&& Rent_Amount >= ${
     rent.split(',')[0]
   } && Rent_Amount <= ${rent.split(',')[1]}`;
 
+  // Combine all criteria into a single query string
   const criteria = `(Number_Of_Bathrooms >= ${bathrooms} && Number_Of_Bedrooms >= ${bedrooms} && Property_Name.contains("${search}") ${
     types.length !== 0 ? '&& ' : ''
   } ${typeCriteria} ${rentCriteria})`;
 
+  // Retrieve the access token for authentication
   const token = await getAccessToken();
-  const encodedCriteria = encodeURIComponent(criteria);
-  const result = await fetchPropertyData(token, encodedCriteria);
-  const propertyData = result?.data[Number(item)];
 
+  // Encode the criteria to be URL-safe
+  const encodedCriteria = encodeURIComponent(criteria);
+
+  // Fetch property data from the API using the encoded criteria
+  const result = await fetchPropertyData(token, encodedCriteria);
+
+  // Extract the specific property data based on the item index
+  const propertyData = result?.data[Number(item)];
   return (
     <>
       <Header />

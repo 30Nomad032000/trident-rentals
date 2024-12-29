@@ -86,10 +86,12 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
     loadCaptchaEnginge(6);
   }, []);
 
+  // Handle the agreement checkbox click by updating the 'agree' field in the form
   const handleAgreeClick = (bool: boolean) => {
     setValue('agree', bool);
   };
 
+  // Generate FormData based on the user type and form data
   const generateFormData = (
     type: 'vendor' | 'tenant' | 'partner' | 'landlord',
     data: z.output<typeof registerSchema>
@@ -144,23 +146,27 @@ export const RegisterForm: React.FC<RegisterationFormProps> = ({
     return formData;
   };
 
+  // Handle form submission
   const onSubmit = async (data: z.output<typeof registerSchema>) => {
-    setLoading(true);
+    setLoading(true); // Set loading state to true
+
     if (!validateCaptcha(data.captcha)) {
+      // Validate captcha input
       setLoading(false);
-      toast.error('Verification Failed, Please try again!!!');
+      toast.error('Verification Failed, Please try again!!!'); // Show error if captcha fails
     } else {
-      const formData = generateFormData(type, data);
-      const res = await onSubmitAction(formData, token, type);
+      const formData = generateFormData(type, data); // Generate FormData based on user type
+      const res = await onSubmitAction(formData, token, type); // Submit form data
+
       if (res.message === 'Data Added Successfully') {
-        reset();
+        reset(); // Reset form on successful submission
         setLoading(false);
-        toast.success('Registered Successfully! 🎉');
+        toast.success('Registered Successfully! 🎉'); // Show success message
       } else {
         setLoading(false);
         toast.error(
           'Please ensure all required fields are filled out correctly and try again.'
-        );
+        ); // Show error message on failure
       }
     }
   };
