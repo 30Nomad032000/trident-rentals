@@ -1,7 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { useState, useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import {
   Carousel,
@@ -13,11 +14,10 @@ import {
   SliderThumbItem,
 } from '@/components/ui/carousel';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
 import type { Property } from '../../../types/types';
 import { getImageUrl } from '@/lib/utils';
 import ImageViewer from 'react-simple-image-viewer';
-import Link from 'next/link';
+
 interface PropertyModalProps {
   isOpen?: boolean;
   property: Property | undefined;
@@ -30,11 +30,17 @@ export default function PropertyModal({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  // State for the Image Viewer
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+
+  // NEW: State for showing the "member signup" dialog
+  const [showInterestedDialog, setShowInterestedDialog] = useState(false);
+
   const images = property?.Property_Image1;
 
-  // Handles closing by updating the 'isOpen' query parameter in the URL
+  // Handles closing the main property modal
   const handleClose = (value: boolean) => {
     router.push(`${pathname}?${createQueryString('isOpen', `${value}`)}`, {
       scroll: false,
@@ -51,20 +57,26 @@ export default function PropertyModal({
     [searchParams]
   );
 
-  // Opens the image viewer by setting the current image index and toggling the viewer state
+  // Opens the image viewer
   const openImageViewer = useCallback((index: number) => {
     setCurrentImage(index);
     setIsViewerOpen(true);
   }, []);
 
-  // Closes the image viewer by resetting the current image index and toggling the viewer state
+  // Closes the image viewer
   const closeImageViewer = () => {
     setCurrentImage(0);
     setIsViewerOpen(false);
   };
 
+  // When user clicks "I'm Interested" -> show secondary dialog
+  const handleInterestedClick = () => {
+    setShowInterestedDialog(true);
+  };
+
   return (
     <>
+      {/* Main (original) Property Modal */}
       <Dialog
         modal={false}
         open={isOpen}
@@ -93,13 +105,12 @@ export default function PropertyModal({
                   </span>
                   &nbsp;/ monthly
                 </div>
-                <Button className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399]">
-                  <Link
-                    href="https://tridentrentalllc.zohocreatorportal.com/"
-                    target="_blank"
-                  >
-                    I’m Interested
-                  </Link>
+                {/* Changed to open the second dialog */}
+                <Button
+                  onClick={handleInterestedClick}
+                  className="px-[30px] py-[10px] w-fit text-base font-normal bg-[#003399]"
+                >
+                  I’m Interested
                 </Button>
               </div>
               <div className="flex flex-col gap-y-7 px-4">
@@ -108,16 +119,6 @@ export default function PropertyModal({
                 </div>
 
                 <div className="grid grid-cols-2 gap-x-8 gap-y-8 ">
-                  {/* <div className="flex flex-col gap-2">
-                  <Image
-                    src="/house.svg"
-                    alt="house"
-                    height={100}
-                    width={100}
-                    className="size-6"
-                  />
-                  <div className="text-base font-medium text-[#172540]"></div>
-                </div> */}
                   <div className="flex flex-col gap-2">
                     <Image
                       src="/pin.svg"
@@ -166,24 +167,47 @@ export default function PropertyModal({
                       {property?.Number_Of_Bathrooms} bathrooms
                     </div>
                   </div>
-                  {/* <div className="flex flex-col gap-2">
-                  <Image
-                    src="/car.svg"
-                    alt="house"
-                    height={100}
-                    width={100}
-                    className="size-6"
-                  />
-                  <div className="text-base font-medium text-[#172540]">
-                    car parking
-                  </div>
-                </div> */}
                 </div>
               </div>
             </div>
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* NEW: Minimal signup/login dialog */}
+      <Dialog
+        open={showInterestedDialog}
+        onOpenChange={setShowInterestedDialog}
+      >
+        <DialogContent className="max-w-sm w-full text-center p-6 space-y-4">
+          <DialogTitle className="text-lg font-semibold text-gray-800">
+            Already a Member?
+          </DialogTitle>
+          <p className="text-sm text-gray-600">
+            Choose to log in or sign up as a tenant.
+          </p>
+          <div className="flex justify-center space-x-2 mt-2">
+            {/* Open Zoho portal in a new tab */}
+            <Button
+              variant="outline"
+              onClick={() =>
+                window.open(
+                  'https://tridentrentalllc.zohocreatorportal.com/',
+                  '_blank'
+                )
+              }
+            >
+              Login
+            </Button>
+            {/* Navigate to /register?q=tenant in same tab */}
+            <Button onClick={() => router.push('/register?q=tenant')}>
+              Sign Up
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Image Viewer stays the same */}
       {isViewerOpen && (
         <ImageViewer
           src={
@@ -205,6 +229,7 @@ export default function PropertyModal({
   );
 }
 
+// CarouselOrientation remains unchanged
 interface CarouselOrientationProps {
   property: Property | undefined;
   onClick: (index: number) => void;

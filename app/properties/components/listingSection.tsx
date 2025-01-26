@@ -55,22 +55,25 @@ export default function ListingSection({ data }: ListingSectionProps) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-x-1 sm:gap-x-2 md:gap-x-2 lg:gap-x-4 xl:gap-x-10 gap-y-8">
-      {paginatedData.map((item, index) => (
-        <ListingCard
-          image={getImageUrl(
-            item.Property_Image1[0].ID,
-            item.Property_Image1[0].Upload_your_Image_here
-          )}
-          index={index}
-          space={item.Property_Size}
-          name={item.Property_Name}
-          bedrooms={item.Number_Of_Bedrooms}
-          bathrooms={item.Number_Of_Bathrooms}
-          address={item.Property_Address?.zc_display_value}
-          price={item.Rent_Amount}
-          key={index}
-        />
-      ))}
+      {paginatedData.map((item, index) => {
+        const absoluteIndex = (currentPage - 1) * pageSize + index;
+        return (
+          <ListingCard
+            key={absoluteIndex}
+            image={getImageUrl(
+              item.Property_Image1[0].ID,
+              item.Property_Image1[0].Upload_your_Image_here
+            )}
+            index={absoluteIndex}
+            space={item.Property_Size}
+            name={item.Property_Name}
+            bedrooms={item.Number_Of_Bedrooms}
+            bathrooms={item.Number_Of_Bathrooms}
+            address={item.Property_Address?.zc_display_value}
+            price={item.Rent_Amount}
+          />
+        );
+      })}
 
       <div className="col-span-full flex justify-center py-4">
         <Pagination>
